@@ -28,7 +28,6 @@ $(function(){
 
 	function draw() {
 		setTimeout(function() {
-	        requestAnimationFrame(draw);
 	        frame++;
 	        if(frame>fps) frame = 1;
 
@@ -37,8 +36,8 @@ $(function(){
 
 		    // Drawing code goes here... for example updating an 'x' position:
 		    //ctx.globalAlpha = 0.4;
-			ctx.fillStyle = 'rgba(255,0,0,0.5)';
-			ctx.fillRect(0, 0, 640, 480);
+			//ctx.fillStyle = 'rgba(255,0,0,0.1)';
+			//ctx.fillRect(0, 0, 640, 480);
 
 			ctx.font = '24pt "visitor_tt1_brkregular" normal';
 			ctx.fillStyle = '#ffffff';
@@ -52,15 +51,14 @@ $(function(){
 			ctx.fillStyle = '#ffffff';
 		    ctx.fillText(blurp, 50, 100);
 		    if(char_index == texts[text_index].length) {
-		    	//if(hold>0) hold--; 
-		    	//else if(hold == 0) {
-		    		char_index = 0;
-					if(text_index<texts.length-1) text_index++;
-					else text_index=0;
-					blurp = '';
-		    	//}
+	    		char_index = 0;
+				if(text_index<texts.length-1) text_index++;
+				else text_index=0;
+				blurp = '';
+				setTimeout(draw,2500);
+			}else{
+				draw();
 			}
-
 	    }, time);
 	}
 	setTimeout(draw,100);
