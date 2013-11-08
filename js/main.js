@@ -18,8 +18,8 @@ $(function(){
 	hud.fillRect(0, 0, canvas.width, canvas.height);
 
 	document.getElementById('container').addEventListener('click', function() {
-		//sceneBoot();
-		sceneDashboard();
+		sceneBoot();
+		//sceneDashboard();
 	});
 
 	function preloadSound() {
