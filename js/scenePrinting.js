@@ -6,4 +6,5 @@ var scenePrinting = function(){
 	hud.fillStyle = '#ffffff';
 	hud.textAlign = 'center';
     hud.fillText('scene printing...', center_x, center_y);
+    setTimeout(sceneDashboard,2000);
 };
