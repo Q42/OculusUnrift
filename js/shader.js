@@ -77,13 +77,15 @@ function Camera(){
 		cams.push(cam);
 	};
 
+	var start = Date.now();
+
 	this.draw = function(){
 		if(!inited) return;
 		gl.clear(gl.COLOR_BUFFER_BIT);
 		gl.useProgram(shader);
 
 		gl.uniform1i(gl.getUniformLocation(shader, 'scene'), shaderScene);
-		gl.uniform1f(gl.getUniformLocation(shader, 'iGlobalTime'), Math.round(Date.now()/1000));
+		gl.uniform1f(gl.getUniformLocation(shader, 'iGlobalTime'), (start-Date.now())/10);
 
 		drawTexture(0,'overlay',overlay,_overlay);
 

@@ -59,7 +59,7 @@ vec3 tvRight(vec2 uv, float xOffset) {
   return vec3(red,green,blue);
 }
 vec4 tv(vec2 uv, bool left) {
-  float jerkOffset = (1.0-step(hash(vec2(iGlobalTime*1.3,5.0)),0.8))*0.05;
+  float jerkOffset = (1.0-step(hash(vec2(iGlobalTime*1.3,5.0)),0.8))*0.005;
 
   float wiggleOffset = hash(vec2(iGlobalTime*15.0,uv.y*80.0))*0.003;
   float largeWiggleOffset = hash(vec2(iGlobalTime*1.0,uv.y*25.0))*0.004;
@@ -70,10 +70,10 @@ vec4 tv(vec2 uv, bool left) {
   if(left) color = tvLeft(uv,xOffset);
 	else color = tvRight(uv,xOffset);
 
-  float scanline = -0.2+sin(uv.y*800.0)*0.25;
+  float scanline = -0.2+sin((uv.y+iGlobalTime/100.)*800.0)*0.1;
   color -= scanline;
-  color += vec3 (-0.3, 0., 0.);
-  color *= vec3 (2.6, 0.1, 0.1);
+  color += vec3 (-0.4, -.2, -.2);
+  color *= vec3 (1.2, 0.3, 0.3);
 
   return vec4(color,1.0);
 }
