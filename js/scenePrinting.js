@@ -2,7 +2,8 @@ var scenePrinting = function(){
 	// Clear the canvas
 	hud.clearRect(0, 0, canvas.width, canvas.height);
 
-	hud.font = '12pt "visitor_tt1_brkregular" normal';
+	hud.font = '20pt "visitor_tt1_brkregular" normal';
 	hud.fillStyle = '#ffffff';
-    hud.fillText('scene printing...', 200, 220);
+	hud.textAlign = 'center';
+    hud.fillText('scene printing...', center_x, center_y);
 };

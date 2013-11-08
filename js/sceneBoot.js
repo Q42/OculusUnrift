@@ -9,9 +9,10 @@ var sceneBoot = function(){
 	hud.fillStyle = '#000';
 	hud.fillRect(0, 0, canvas.width, canvas.height);
 
-	hud.font = '12pt "visitor_tt1_brkregular" normal';
+	hud.font = '20pt "visitor_tt1_brkregular" normal';
 	hud.fillStyle = '#fff';
-    hud.fillText('Unrift', 200, 220);
+	hud.textAlign = 'center';
+    hud.fillText('Unrift', center_x, center_y);
 
     createjs.Sound.play('sounds/robotpoweron.mp3');
 

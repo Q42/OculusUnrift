@@ -32,8 +32,11 @@ vec2 HmdWarp(vec2 in01, vec2 LensCenter) {
 	 return LensCenter + Scale * rvector;
 }
 //shader scene 1
-vec4 scene1(vec4 color){
-	return vec4(1.,0.,0.,1.);
+vec2 scene1dp(vec2 coo){
+	return coo;
+}
+vec4 scene1col(vec4 color) {
+	return color*vec4(1.,0.,0.5,1.);
 }
 
 void main() {
@@ -43,27 +46,26 @@ void main() {
 
 	vec4 col;
 
+	//preprocessing displacement filters
+	if(scene==1) otc = scene1dp(otc);
+
 	//warp that shit
 	vec2 tc = HmdWarp(otc, ScreenCenter);
 
 	//todo - better area clamping
 	if (!(any(bvec2(clamp(tc,ScreenCenter-vec2(0.25,0.5), ScreenCenter+vec2(0.25,0.5)) - tc))))
 	{
-		vec2 dp;
+		vec2 displace = left ? vec2(tc.x+0.25,tc.y) : vec2(tc.x-0.25,tc.y);
 
-		if(left) {
-			dp = vec2(tc.x+0.25,tc.y);
-			col = texture2D(tex1,dp);
-		}
-		else {
-			dp = vec2(tc.x-0.25,tc.y);
-			col = texture2D(tex2,dp);
-		}
+		if(left) col = texture2D(tex1,displace);
+		else col = texture2D(tex2,displace);
 
-		vec4 ol = texture2D(overlay,dp);
+		//posprocessing (color) filters based on scene
+		if(scene==1) col = scene1col(col);
+
+		//add the overlay
+		vec4 ol = texture2D(overlay,displace);
 		col=ol+col*(1.-ol.a);
-
-		if(scene==1) col = scene1(col);
 
 		gl_FragColor = col;
 	}

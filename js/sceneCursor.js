@@ -12,7 +12,7 @@ var sceneCursor = function(){
 		if (blinkCount < 8) {
 			if (blinkCount % 2 == 0) {
 				hud.fillStyle = 'rgb(255,255,255)';
-				hud.fillText('\u2588', 200, 220);
+				hud.fillText('\u2588', 400, 440);
 			} else {
 				hud.fillStyle = 'rgb(0,0,0)';
 				hud.fillRect(0, 0, canvas.width, canvas.height);
