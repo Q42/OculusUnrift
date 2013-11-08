@@ -59,7 +59,7 @@ function Camera(){
 		gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
 		gl.enable(gl.BLEND);
 		gl.clearColor(0,0,0,0);
-		gl.viewport(0,0,1280,480);
+		gl.viewport(0,0,1024,640);
 		gl.linkProgram(shader);
 		pos = gl.getAttribLocation(shader, "pos");
 		texAttr = gl.getAttribLocation(shader, "aTextureCoord");

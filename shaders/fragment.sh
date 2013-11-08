@@ -10,7 +10,7 @@ uniform sampler2D tex2;
 varying highp vec2 vTextureCoord;
 varying vec2 p;
 
-vec2 res = vec2(1280.,480.);
+vec2 res = vec2(1024.,640.);
 float pi = 3.14159265358979323846264;
 
 // voor w00tcamp oculus unrift
@@ -23,12 +23,12 @@ const vec2 RightScreenCenter = vec2(0.75, 0.5);
 
 // Scales input texture coordinates for distortion.
 vec2 HmdWarp(vec2 in01, vec2 LensCenter) {
-   vec2 theta = (in01 - LensCenter) * ScaleIn;
-   float rSq = length(theta);
-   vec2 rvector = theta * (HmdWarpParam.x + HmdWarpParam.y * rSq +
-      HmdWarpParam.z * rSq * rSq +
-      HmdWarpParam.w * rSq * rSq * rSq);
-   return LensCenter + Scale * rvector;
+	 vec2 theta = (in01 - LensCenter) * ScaleIn;
+	 float rSq = length(theta);
+	 vec2 rvector = theta * (HmdWarpParam.x + HmdWarpParam.y * rSq +
+			HmdWarpParam.z * rSq * rSq +
+			HmdWarpParam.w * rSq * rSq * rSq);
+	 return LensCenter + Scale * rvector;
 }
 
 void main() {
@@ -36,21 +36,23 @@ void main() {
 	vec2 ScreenCenter = left ? LeftScreenCenter : RightScreenCenter;
 	vec2 otc = (gl_FragCoord.xy) / vec2(res.x, res.y);
 
-  //warp that shit
+	//warp that shit
 	vec2 tc = HmdWarp(otc, ScreenCenter);
 
-  //todo - better area clamping
-  if (!(any(bvec2(clamp(tc,ScreenCenter-vec2(0.25,0.5), ScreenCenter+vec2(0.25,0.5)) - tc))))
-  {
+	//todo - better area clamping
+	if (!(any(bvec2(clamp(tc,ScreenCenter-vec2(0.25,0.5), ScreenCenter+vec2(0.25,0.5)) - tc))))
+	{
+		vec2 dp;
 		if(left) {
-			vec2 dp = vec2(tc.x+0.25,tc.y);
-			gl_FragColor = texture2D(tex1,dp)+texture2D(overlay,dp);
-	  }
-	  else {
-			vec2 dp = vec2(tc.x-0.25,tc.y);
-			gl_FragColor = texture2D(tex2,dp)+texture2D(overlay,dp);
-	  }
-  }
-  // black out clamp
+			dp = vec2(tc.x+0.25,tc.y);
+			gl_FragColor = texture2D(tex1,dp);
+		}
+		else {
+			dp = vec2(tc.x-0.25,tc.y);
+			gl_FragColor = texture2D(tex2,dp);
+		}
+		gl_FragColor+=texture2D(overlay,dp);
+	}
+	// black out clamp
 	else gl_FragColor = vec4(0.,0.,0.,0.);
 }

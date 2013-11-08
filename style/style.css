@@ -15,10 +15,10 @@ html {
 }
 #container {
 	width: 1024px;
-	height: 480px;
+	height: 640px;
 	position: absolute;
 	left: 50%; top: 50%;
-	margin: -240px 0 0 -512px;
+	margin: -320px 0 0 -512px;
 	outline: 1px solid #f00;
 }
 video {
@@ -26,7 +26,7 @@ video {
 }
 canvas.video {
 	width: 1024px;
-	height: 480px;
+	height: 640px;
 	outline: 1px solid #00f;
 	float: left;
 }
