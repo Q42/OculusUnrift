@@ -20,7 +20,6 @@ function Camera(){
 	gl.bindBuffer(gl.ARRAY_BUFFER, quad);
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1.,-1.,1.,-1.,-1.,1.,1.,-1.,1.,1.,-1.,1.]), gl.STATIC_DRAW);
 
-	var overlayC = new Overlay();
 	var overlay = gl.createTexture();
 	gl.bindTexture(gl.TEXTURE_2D, overlay);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
@@ -81,7 +80,7 @@ function Camera(){
 		gl.clear(gl.COLOR_BUFFER_BIT);
 		gl.useProgram(shader);
 
-		drawTexture(0,'overlay',overlay,overlayC.canvas);
+		drawTexture(0,'overlay',overlay,document.getElementById('hud-overlay'));
 
 		for(var i=0;i<cams.length;i++)
 			drawTexture(cams[i].num,'tex'+cams[i].num,cams[i].texture,cams[i])
