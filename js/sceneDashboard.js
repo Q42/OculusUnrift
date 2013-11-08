@@ -1,5 +1,5 @@
 // ========= SCENE BOOT
-var sceneDashboard = function(){
+var sceneDashboard = function(callback){
 	// global var hud references to canvas.gethud("2d")
 	
 	// To skip this scene:
@@ -23,6 +23,5 @@ var sceneDashboard = function(){
 		hud.restore();
 	};
 	needle.src = '/img/needle.png';
-
-	//setTimeout(sceneBoot,8000);
-}
+  setTimeout(callback, 8000);
+};
