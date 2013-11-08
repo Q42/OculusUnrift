@@ -1,5 +1,5 @@
 // ========= SCENE CURSOR
-var sceneCursor = function(){
+var sceneCursor = function(callback){
 	// global var hud references to canvas.getContext("2d")
 
 	// To skip this scene:
@@ -35,7 +35,7 @@ var sceneCursor = function(){
 			alpha -= 0.01;
 			setTimeout(fadeOut, 50);
 		} else {
-			sceneMumboJumbo();
+			callback();
 		}
 	}
-}
+};

@@ -9,19 +9,16 @@ $(function(){
 	center_x = canvas.width/2;
 	center_y = canvas.height/2;
 
-	document.getElementById('readyForDemo').addEventListener('click', function() {
-		$('.camselect').hide();
-		$(this).hide();
-	});
-
 	hud.fillStyle = '#000';
 	hud.fillRect(0, 0, canvas.width, canvas.height);
 
 	document.getElementById('container').addEventListener('click', function() {
-//		sceneCrash();
-		sceneBoot();
-		//sceneDashboard();
+		director.start();
 	});
+
+//  Mousetrap.bind('space', function() {
+//    highlight([21, 22, 23]);
+//  });
 
 	function preloadSound() {
 		var manifest = [
