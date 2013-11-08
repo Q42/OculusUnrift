@@ -1,3 +1,5 @@
+var shaderScene = 0;
+
 function Camera(){
 	var _el = document.getElementById('cam')
 		, inited = false
@@ -78,6 +80,8 @@ function Camera(){
 		if(!inited) return;
 		gl.clear(gl.COLOR_BUFFER_BIT);
 		gl.useProgram(shader);
+
+		gl.uniform1i(gl.getUniformLocation(shader, 'scene'), shaderScene);
 
 		drawTexture(0,'overlay',overlay,document.getElementById('hud-overlay'));
 
