@@ -16,6 +16,11 @@ $(function(){
     director.start();
   });
 
+  Mousetrap.bind('r', function() {
+    director.replayToggle();
+  });
+
+
   Mousetrap.bind('1', function() {
     streams[0].toggleSource();
   });
