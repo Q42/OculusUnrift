@@ -1,4 +1,3 @@
-var shaderScene = 1;
 
 function Camera(){
 	var _el = document.getElementById('cam')
@@ -8,6 +7,8 @@ function Camera(){
 		, texAttr = null
 		, pos = null
 		;
+
+  var useOverlay = true;
 
 	var gl = _el.getContext("experimental-webgl");
 	gl.viewportWidth = _el.width;
@@ -27,7 +28,7 @@ function Camera(){
 
 	function addShader(uri,type){
 		$.get(uri,function(res){
-			var sh=gl.createShader(type=='fragment'?gl.FRAGMENT_SHADER:gl.VERTEX_SHADER)
+			var sh=gl.createShader(type=='fragment'?gl.FRAGMENT_SHADER:gl.VERTEX_SHADER);
 			gl.shaderSource(sh,res);
 			gl.compileShader(sh);
 			if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS))
@@ -78,12 +79,16 @@ function Camera(){
 
 	var start = Date.now();
 
+  this.toggleOverlay = function() {
+    useOverlay = !useOverlay;
+  };
+
 	this.draw = function(){
 		if(!inited) return;
 		gl.clear(gl.COLOR_BUFFER_BIT);
 		gl.useProgram(shader);
 
-		gl.uniform1i(gl.getUniformLocation(shader, 'scene'), shaderScene);
+		gl.uniform1i(gl.getUniformLocation(shader, 'useOverlay'), useOverlay);
 		gl.uniform1f(gl.getUniformLocation(shader, 'iGlobalTime'), (start-Date.now())/10);
 
 		drawTexture(0,'overlay',overlay,_overlay);
@@ -98,4 +103,4 @@ function Camera(){
 		gl.disableVertexAttribArray(pos);
 	};
 
-};
+}

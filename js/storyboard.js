@@ -58,6 +58,10 @@ var director = new (function () {
     self.replay = !self.replay;
   }
 
+  self.setScene = function (scene) {
+     self.currentSceneIndex = scene % storyboard.length;
+  }
+
 })();
 
 

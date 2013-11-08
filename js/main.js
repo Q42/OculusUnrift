@@ -1,4 +1,9 @@
 /* ===== CANVAS 2D */
+
+function getURLParameter(name) {
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+}
+
 $(function(){
 	canvas = document.getElementById("hud-overlay");
 	hud = canvas.getContext("2d");
@@ -28,6 +33,16 @@ $(function(){
   Mousetrap.bind('2', function() {
     streams[1].toggleSource();
   });
+
+  Mousetrap.bind('x', function() {
+    camera.toggleOverlay();
+  });
+
+  var scene = getURLParameter('scene');
+  if (scene !== null) {
+    director.setScene(scene);
+    director.start();
+  }
 
   function preloadSound() {
 		var manifest = [
