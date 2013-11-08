@@ -14,18 +14,18 @@ html {
 	background: #000;
 }
 #container {
-	width: 1280px;
+	width: 1024px;
 	height: 480px;
 	position: absolute;
 	left: 50%; top: 50%;
-	margin: -240px 0 0 -640px;
+	margin: -240px 0 0 -512px;
 	outline: 1px solid #f00;
 }
 video {
 	display: none;
 }
 canvas.video {
-	width: 1280px;
+	width: 1024px;
 	height: 480px;
 	outline: 1px solid #00f;
 	float: left;
