@@ -6,7 +6,7 @@ var sceneCursor = function(){
 	function fadeOut() {
 		color--;
 		hud.fillStyle = 'rgb('+color+','+color+','+color+')';
-		hud.fillRect(0, 0, 512, 480);
+		hud.fillRect(0, 0, canvas.width, canvas.height);
 		if (color>0) {
 			setTimeout(fadeOut, 10);
 		} else {
@@ -21,10 +21,10 @@ var sceneCursor = function(){
     	if (blinkCount < 10) {
     		if (blinkCount % 2 == 0) {
 	    		hud.fillStyle = 'rgb(255,255,255)';
-	    		hud.fillText('█', 200, 220);
+	    		hud.fillText('█', 400, 440);
 	    	} else {
 	    		hud.fillStyle = 'rgb(0,0,0)';
-	    		hud.fillRect(0, 0, 512, 480);
+	    		hud.fillRect(0, 0, canvas.width, canvas.height);
 	    	}
     		setTimeout(showCursor, 500);
     	} else {

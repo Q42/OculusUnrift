@@ -10,7 +10,7 @@ var sceneMumboJumbo = function(){
 	var flicker = 0;
 
 	function setText(txt){
-		hud.font = '9pt "visitor_tt1_brkregular" normal';
+		hud.font = '16pt "visitor_tt1_brkregular" normal';
 		hud.fillStyle = '#ffffff';
 		hud.textAlign = 'center';
 		hud.fillText(txt, center_x, 100);
@@ -32,7 +32,7 @@ var sceneMumboJumbo = function(){
 		    flicker = flicker == 0 ? 0.2 : 0;
 		    if(char_index == texts[text_index].length-1) flicker = 0;
 		    hud.fillStyle = 'rgba(255,0,0,'+flicker+')';
-			hud.fillRect(0, 0, 512, 480);
+			hud.fillRect(0, 0, canvas.width, canvas.height);
 
 
 		    blurp += texts[text_index].charAt(char_index);
