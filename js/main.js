@@ -69,7 +69,36 @@ $(function(){
 		});
 	}
 
+	function initSpeech() {
+		var recognition = new webkitSpeechRecognition();
+		recognition.continuous = true;
+		recognition.interimResults = true;
+		recognition.lang = 'en-US';
+		//recognition.lang = 'nl-NL';
+		//recognition.lang = 'he-HE';
+		recognition.onstart = function() {
+			console.log('Speech recognition started');
+		};
+		recognition.onerror = function(event) {
+			console.log('Speech recognition error', event)
+		};
+		recognition.onend = function() {
+			console.log('Speech recognition ended');
+		};
+		recognition.onresult = function(event) {
+			//console.log(event);
+			for (var i = event.resultIndex; i < event.results.length; ++i) {
+				if (event.results[i].isFinal) {
+					console.log('final', event.results[i][0].transcript);
+				} else {
+					console.log('interim', event.results[i][0].transcript);
+				}
+			}
+		};
+		recognition.start();
+	}
+
 	preloadSound();
 	initFrequency();
-
+	initSpeech();
 });
