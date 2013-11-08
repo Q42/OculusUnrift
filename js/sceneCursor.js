@@ -4,8 +4,8 @@ var sceneCursor = function(){
 	// Clear the canvas
 	hud.clearRect(0, 0, canvas.width, canvas.height);
 
-	hud.font = '24pt "visitor_tt1_brkregular" normal';
+	hud.font = '12pt "visitor_tt1_brkregular" normal';
 	hud.fillStyle = '#ffffff';
-    hud.fillText('scene cursor...', 200, 220);
+    hud.fillText('scene cursor...', 120, 220);
 	setTimeout(sceneMumboJumbo,1000);
 }

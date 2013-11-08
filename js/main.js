@@ -3,6 +3,9 @@ $(function(){
 	canvas = document.getElementById("hud-overlay");
 	hud = canvas.getContext("2d");
 
+	hud.fillStyle = '#000';
+	hud.fillRect(0, 0, 512, 480);
+
 	document.getElementById('container').addEventListener('click', function() {
 		sceneBoot();
 	});

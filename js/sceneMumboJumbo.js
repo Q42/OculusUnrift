@@ -22,15 +22,15 @@ var sceneMumboJumbo = function(){
 			//hud.fillStyle = 'rgba(255,0,0,0.1)';
 			//hud.fillRect(0, 0, 640, 480);
 
-			hud.font = '24pt "visitor_tt1_brkregular" normal';
+			hud.font = '12pt "visitor_tt1_brkregular" normal';
 			hud.fillStyle = '#ffffff';
-		    hud.fillText(frame, 600, 460);
+		    hud.fillText(frame, 490, 460);
 
 		    blurp += texts[text_index].charAt(char_index);
 		    createjs.Sound.play('sounds/blip.mp3');
 			char_index += 1;
 
-			hud.font = '14pt "visitor_tt1_brkregular" normal';
+			hud.font = '9pt "visitor_tt1_brkregular" normal';
 			hud.fillStyle = '#ffffff';
 		    hud.fillText(blurp, 50, 100);
 		    if(char_index == texts[text_index].length) {
