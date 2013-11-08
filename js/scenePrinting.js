@@ -1,5 +1,4 @@
-var scenePrinting = function(callback){
-	// Clear the canvas
+var scenePrinting = function(callback) {
 	hud.clearRect(0, 0, canvas.width, canvas.height);
 
 	hud.font = '20pt "visitor_tt1_brkregular" normal';

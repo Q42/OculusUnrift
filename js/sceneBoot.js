@@ -1,11 +1,5 @@
 // ========= SCENE BOOT
-var sceneBoot = function(callback){
-	// global var hud references to canvas.getContext("2d")
-	
-	// To skip this scene:
-	//sceneCursor();
-	//return;
-
+var sceneBoot = function(callback) {
 	hud.fillStyle = '#000';
 	hud.fillRect(0, 0, canvas.width, canvas.height);
 
