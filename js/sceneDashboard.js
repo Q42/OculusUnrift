@@ -6,15 +6,15 @@ var sceneDashboard = function(){
 	// Clear the canvas
 	hud.clearRect(0, 0, canvas.width, canvas.height);
 
-	var imageObj = new Image();
+	var meter = new Image();
 
-	imageObj.onload = function() {
+	meter.onload = function() {
 		hud.save();
     	hud.globalAlpha = 0.4;
 		hud.drawImage(imageObj, canvas.width/2-50, canvas.height/2,100,42);
 		hud.restore();
 	};
-	imageObj.src = '/img/meter.png';
+	meter.src = '/img/meter.png';
 
-	setTimeout(sceneBoot,8000);
+	//setTimeout(sceneBoot,8000);
 }
