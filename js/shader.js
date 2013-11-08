@@ -8,7 +8,6 @@ function Camera(){
 		, texAttr = null
 		, pos = null
 		;
-		;
 
 	var gl = _el.getContext("experimental-webgl");
 	gl.viewportWidth = _el.width;

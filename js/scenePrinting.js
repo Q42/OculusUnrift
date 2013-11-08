@@ -1,4 +1,4 @@
-var scenePrinting = function(){
+var scenePrinting = function(callback){
 	// Clear the canvas
 	hud.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -7,5 +7,5 @@ var scenePrinting = function(){
 	hud.textAlign = 'center';
     hud.fillText('scene printing...', center_x, center_y);
 	showFrequency = true;
-    setTimeout(sceneDashboard, 2000);
+  setTimeout(callback, 2000);
 };

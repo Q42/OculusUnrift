@@ -9,16 +9,19 @@ $(function(){
 	center_x = canvas.width/2;
 	center_y = canvas.height/2;
 
-	document.getElementById('readyForDemo').addEventListener('click', function() {
-		$('.camselect').hide();
-		$(this).hide();
-	});
-
 	hud.fillStyle = '#000';
 	hud.fillRect(0, 0, canvas.width, canvas.height);
 
-	document.getElementById('container').addEventListener('click', function() {
-		sceneBoot();
+	Mousetrap.bind('space', function() {
+		director.start();
+	});
+
+	Mousetrap.bind('1', function() {
+		streams[0].toggleSource();
+	});
+
+	Mousetrap.bind('2', function() {
+		streams[1].toggleSource();
 	});
 
 	function preloadSound() {
@@ -64,4 +67,5 @@ $(function(){
 
 	preloadSound();
 	initFrequency();
+
 });

@@ -33,26 +33,17 @@ function vidStream(num,ids) {
 	var me = this;
 	var video = document.querySelector('#vid'+num);
 
-	var _sel = document.createElement('select');
-	_sel.className = 'camselect';
-	document.body.appendChild(_sel);
+  var currentID = -1;
 
-	var _none = document.createElement('option');
-	_none.text = 'select for '+num;
-	_sel.appendChild(_none);
+  me.toggleSource = function () {
+     currentID++;
+    currentID %= ids.length;
+    localStorage.setItem("vid_channel_" + num, currentID);
+    me.start(ids[currentID]);
 
-	for(var i=0;i<ids.length;i++) {
-		var _opt = document.createElement('option');
-		_opt.value = ids[i];
-		_opt.text = i;
-		_sel.appendChild(_opt);
-	}
+  };
 
-	_sel.addEventListener('change',function(){
-		if(_sel.value) me.start(_sel.value);
-	});
-
-	this.start = function(id){
+	me.start = function(id){
 		navigator.getMedia({
 			video: {optional: [{sourceId: id}]},
 			audio: false
@@ -68,4 +59,8 @@ function vidStream(num,ids) {
 		});
 	};
 
-};
+  var i =  localStorage.getItem("vid_channel_" + num);
+  if (i === null) i=0;
+  currentID = i;
+  me.start(i);
+}

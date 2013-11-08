@@ -1,4 +1,4 @@
-var sceneMumboJumbo = function(){
+var sceneMumboJumbo = function(callback){
 	var fps = 30;
 	var frame = 0;
 	var time = 1000/fps;
@@ -52,7 +52,7 @@ var sceneMumboJumbo = function(){
 					setTimeout(draw,2500);
 				}
 				else {
-					setTimeout(scenePrinting,2500);
+					setTimeout(callback, 2500);
 				}
 				
 			}else{
@@ -61,4 +61,4 @@ var sceneMumboJumbo = function(){
 	    }, time);
 	}
 	setTimeout(draw,100);
-}
+};

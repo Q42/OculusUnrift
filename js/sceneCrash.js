@@ -1,5 +1,5 @@
 // ========= SCENE BOOT
-var sceneCrash = function(){
+var sceneCrash = function(callback){
   // global var hud references to canvas.getContext("2d")
   
   // To skip this scene:
@@ -40,5 +40,5 @@ var sceneCrash = function(){
 
   //createjs.Sound.play('sounds/robotpoweron.mp3');
 
-  setTimeout(sceneCursor, 50000);
+  setTimeout(callback, 50000);
 }
