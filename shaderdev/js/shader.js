@@ -27,7 +27,6 @@ function Camera(id){
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
 		gl.bindTexture(gl.TEXTURE_2D, null);
-		console.log('loaded texture',stream.width);
 		init();
 	};
 	stream.src = 'img/testure.jpg';
@@ -38,7 +37,7 @@ function Camera(id){
 		gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
 		gl.enable(gl.BLEND);
 		gl.clearColor(0,0,0,0);
-		gl.viewport(0,0,1024,1024);
+		gl.viewport(0,0,640,480);
 		gl.linkProgram(shader);
 		drawFrame();
 	};
