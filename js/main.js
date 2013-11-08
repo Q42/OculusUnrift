@@ -18,16 +18,15 @@ $(function(){
 	hud.fillRect(0, 0, canvas.width, canvas.height);
 
 	document.getElementById('container').addEventListener('click', function() {
-//		sceneCrash();
 		sceneBoot();
-		//sceneDashboard();
 	});
 
 	function preloadSound() {
 		var manifest = [
 			{ id: 'boot', src: 'sounds/robotpoweron.mp3' },
 			{ id: 'blip', src: 'sounds/blip.mp3' },
-			{ id: 'blip', src: 'sounds/macstartup.mp3' }
+			{ id: 'startup', src: 'sounds/macstartup.mp3' },
+			{ id: 'bips', src: 'sounds/keybip-2.mp3' }
 		];
 		createjs.Sound.addEventListener('fileload', handleLoad);
 		createjs.Sound.registerManifest(manifest);
