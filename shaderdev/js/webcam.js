@@ -3,7 +3,7 @@ addEventListener('DOMContentLoaded',function() {
 			width = 320,
 			height = 0;
 
-	navigator.getMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+	navigator.getMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
 	MediaStreamTrack.getSources(function(l){
 		var vids = [];
