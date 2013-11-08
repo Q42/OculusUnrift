@@ -34,6 +34,7 @@ function vidStream(num,ids) {
 	var video = document.querySelector('#vid'+num);
 
 	var _sel = document.createElement('select');
+	_sel.className = 'camselect';
 	document.body.appendChild(_sel);
 
 	var _none = document.createElement('option');

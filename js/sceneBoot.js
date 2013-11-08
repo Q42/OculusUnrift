@@ -7,6 +7,10 @@ var sceneBoot = function(){
 
 	hud.font = '12pt "visitor_tt1_brkregular" normal';
 	hud.fillStyle = '#ffffff';
+
     hud.fillText('scene boot...', 200, 220);
-	setTimeout(sceneCursor,1000);
+
+    createjs.Sound.play('sounds/robotpoweron.mp3');
+
+	setTimeout(sceneCursor,8000);
 }
