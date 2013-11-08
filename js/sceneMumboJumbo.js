@@ -13,7 +13,10 @@ var sceneMumboJumbo = function(){
 		hud.font = '16pt "visitor_tt1_brkregular" normal';
 		hud.fillStyle = '#ffffff';
 		hud.textAlign = 'center';
-		hud.fillText(txt, center_x, 100);
+		hud.fillText(txt, center_x, center_y-8);
+		//hud.lineWidth = 1;
+      	//hud.strokeStyle = 'blue';
+      	//hud.strokeText(txt, center_x, 200);
 	}
 	
 
@@ -29,11 +32,10 @@ var sceneMumboJumbo = function(){
 			//hud.fillStyle = '#ffffff';
 			//hud.textAlign = 'center';
 		    //hud.fillText(frame, 490, 460);
-		    flicker = flicker == 0 ? 0.2 : 0;
+		    flicker = flicker == 0 ? 0.1 : 0;
 		    if(char_index == texts[text_index].length-1) flicker = 0;
-		    hud.fillStyle = 'rgba(255,0,0,'+flicker+')';
+		    hud.fillStyle = 'rgba(100,0,0,'+flicker+')';
 			hud.fillRect(0, 0, canvas.width, canvas.height);
-
 
 		    blurp += texts[text_index].charAt(char_index);
 		    createjs.Sound.play('sounds/blip.mp3');
