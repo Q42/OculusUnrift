@@ -8,53 +8,51 @@ var storyboard = [
 ];
 
 
-var _director = function () {
-  this.running = false;
-  this.currentSceneIndex = 0;
-
-};
-
-_director.prototype.playCurrentScene = function () {
+var director = new (function () {
   var self = this;
-  var scene = storyboard[self.currentSceneIndex];
-  var postSceneDelay = 0;
-  if (typeof scene === "object") {
-    postSceneDelay = scene[1];
-    scene = scene[0];
-  }
 
-  scene(function () {
-     if (postSceneDelay) {
-       setTimeout(function () { self.sceneCallBack(); }, postSceneDelay);
-     }
-    self.sceneCallBack();
-  });
+  self.running = false;
+  self.currentSceneIndex = 0;
 
-};
+  self.playCurrentScene = function () {
+    var scene = storyboard[self.currentSceneIndex];
+    var postSceneDelay = 0;
+    if (typeof scene === "object") {
+      postSceneDelay = scene[1];
+      scene = scene[0];
+    }
 
-_director.prototype.sceneCallBack = function () {
-  if (!this.running) return;
-  this.currentSceneIndex++;
-  if (this.currentSceneIndex >= storyboard.length) {
-    this.currentSceneIndex = 0;
-    this.running = false;
-    return;
-  }
-  this.playCurrentScene();
-};
+    scene(function () {
+      if (postSceneDelay) {
+        setTimeout(function () { self.sceneCallBack(); }, postSceneDelay);
+      }
+      self.sceneCallBack();
+    });
 
-_director.prototype.start = function() {
-  if (this.running) return;
-  this.running = true;
-  this.playCurrentScene();
-};
+  };
 
-_director.prototype.stop = function() {
-  this.running = false;
-};
+  self.sceneCallBack = function () {
+    if (!self.running) return;
+    self.currentSceneIndex++;
+    if (self.currentSceneIndex >= storyboard.length) {
+      self.currentSceneIndex = 0;
+      self.running = false;
+      return;
+    }
+    self.playCurrentScene();
+  };
 
+  self.start = function() {
+    if (self.running) return;
+    self.running = true;
+    self.playCurrentScene();
+  };
 
-var director = new _director();
+  self.stop = function() {
+    self.running = false;
+  };
+
+})();
 
 
 

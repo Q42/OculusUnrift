@@ -12,15 +12,19 @@ $(function(){
 	hud.fillStyle = '#000';
 	hud.fillRect(0, 0, canvas.width, canvas.height);
 
-	document.getElementById('container').addEventListener('click', function() {
-		director.start();
-	});
+  Mousetrap.bind('space', function() {
+    director.start();
+  });
 
-//  Mousetrap.bind('space', function() {
-//    highlight([21, 22, 23]);
-//  });
+  Mousetrap.bind('1', function() {
+    streams[0].toggleSource();
+  });
 
-	function preloadSound() {
+  Mousetrap.bind('2', function() {
+    streams[1].toggleSource();
+  });
+
+  function preloadSound() {
 		var manifest = [
 			{ id: 'boot', src: 'sounds/robotpoweron.mp3' },
 			{ id: 'blip', src: 'sounds/blip.mp3' },
@@ -62,4 +66,5 @@ $(function(){
 
 	preloadSound();
 	initFrequency();
+
 });
