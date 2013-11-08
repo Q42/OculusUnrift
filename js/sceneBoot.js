@@ -1,6 +1,11 @@
 // ========= SCENE BOOT
 var sceneBoot = function(){
 	// global var hud references to canvas.getContext("2d")
+	var skipScene = false;
+	if (skipScene) {
+		sceneCursor();
+		return;
+	}
 
 	hud.fillStyle = '#fff';
 	hud.fillRect(0, 0, 512, 480);
