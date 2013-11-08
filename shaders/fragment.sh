@@ -24,6 +24,8 @@ const vec4 HmdWarpParam = vec4(1, 0.25, 0.25, 0);
 
 const vec2 LeftScreenCenter = vec2(0.25, 0.5);
 const vec2 RightScreenCenter = vec2(0.75, 0.5);
+const vec2 LeftOverlayCenter = vec2(0.2863248, 0.5);
+const vec2 RightOverlayCenter = vec2(0.7136753, 0.5);
 
 // Scales input texture coordinates for distortion.
 vec2 HmdWarp(vec2 in01, vec2 LensCenter) {
@@ -81,6 +83,7 @@ vec4 tv(vec2 uv, bool left) {
 void main() {
 	bool left = (gl_FragCoord.x < res.x/2.0);
 	vec2 ScreenCenter = left ? LeftScreenCenter : RightScreenCenter;
+	vec2 OverlayCenter = left ? LeftOverlayCenter : RightOverlayCenter;
 	vec2 otc = gl_FragCoord.xy / res;
 
 	vec4 col;
@@ -104,7 +107,9 @@ void main() {
 		}
 
 		//add the overlay
-		vec4 ol = texture2D(overlay,displace);
+		vec2 tco = HmdWarp(otc, OverlayCenter);
+		vec2 displaceo = left ? vec2(tco.x+0.25,tco.y) : vec2(tco.x-0.25,tco.y);
+		vec4 ol = texture2D(overlay,displaceo);
 		col=ol+col*(1.-ol.a);
 
 		gl_FragColor = col;
