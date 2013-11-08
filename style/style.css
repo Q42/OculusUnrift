@@ -10,6 +10,19 @@
     font-style: normal;
 }
 
+
+@font-face {
+    font-family: 'perfect_dos_vga_437regular';
+    src: url('../fonts/perfect_dos_vga_437-webfont.eot');
+    src: url('../fonts/perfect_dos_vga_437-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/perfect_dos_vga_437-webfont.woff') format('woff'),
+         url('../fonts/perfect_dos_vga_437-webfont.ttf') format('truetype'),
+         url('../fonts/perfect_dos_vga_437-webfont.svg#perfect_dos_vga_437regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 html {
 	background: #000;
 }

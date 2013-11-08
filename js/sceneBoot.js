@@ -12,9 +12,10 @@ var sceneBoot = function(){
 	hud.font = '20pt "visitor_tt1_brkregular" normal';
 	hud.fillStyle = '#fff';
 	hud.textAlign = 'center';
-    hud.fillText('Unrift', center_x, center_y);
+	hud.fillText('Unrift', center_x, center_y);
 
-    createjs.Sound.play('sounds/robotpoweron.mp3');
+	//createjs.Sound.play('sounds/robotpoweron.mp3');
+	createjs.Sound.play('sounds/macstartup.mp3');
 
 	setTimeout(sceneCursor, 2000);
 }

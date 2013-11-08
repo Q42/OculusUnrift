@@ -9,7 +9,7 @@ var sceneCursor = function(){
 	var blinkCount = 0;
 	function showCursor() {
 		blinkCount++;
-		if (blinkCount < 8) {
+		if (blinkCount < 12) {
 			if (blinkCount % 2 == 0) {
 				hud.fillStyle = 'rgb(255,255,255)';
 				hud.fillText('\u2588', 400, 440);
@@ -24,6 +24,7 @@ var sceneCursor = function(){
 	}
 
 	showCursor();
+	createjs.Sound.play('sounds/robotpoweron.mp3');
 
 	var alpha = 1;
 	function fadeOut() {
