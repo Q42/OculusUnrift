@@ -32,6 +32,7 @@ addEventListener('DOMContentLoaded',function() {
 function vidStream(num,ids) {
 	var me = this;
 	var video = document.querySelector('#vid'+num);
+	this.video = video;
 
   var currentID = -1;
 
