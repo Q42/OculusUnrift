@@ -1,5 +1,5 @@
-function Camera(id,video){
-	var _el = document.getElementById(id)
+function Camera(num,video){
+	var _el = document.getElementById('cam'+num)
 		, inited = false
 		, shaders = {}
 		;
@@ -23,6 +23,16 @@ function Camera(id,video){
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 	gl.activeTexture(gl.TEXTURE0);
+
+	var overlayC = new Overlay(num);
+	var overlay = gl.createTexture();
+	gl.activeTexture(gl.TEXTURE1);
+	gl.bindTexture(gl.TEXTURE_2D, overlay);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+	gl.activeTexture(gl.TEXTURE1);
 
 	function addShader(uri,type){
 		$.get(uri,function(res){
@@ -55,11 +65,20 @@ function Camera(id,video){
 		var pos = gl.getAttribLocation(shader, "pos");
 		var texAttr = gl.getAttribLocation(shader, "aTextureCoord");
 
+		gl.activeTexture(gl.TEXTURE0);
 		gl.enableVertexAttribArray(texAttr);
 		gl.bindTexture(gl.TEXTURE_2D, texture);
 		gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
 		gl.uniform1i(gl.getUniformLocation(shader, 'tex'), 0);
+		gl.disableVertexAttribArray(texAttr);
+
+		gl.activeTexture(gl.TEXTURE1);
+		gl.enableVertexAttribArray(texAttr);
+		gl.bindTexture(gl.TEXTURE_2D, overlay);
+		gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, overlayC.canvas);
+		gl.uniform1i(gl.getUniformLocation(shader, 'overlay'), 1);
 		gl.disableVertexAttribArray(texAttr);
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, quad);

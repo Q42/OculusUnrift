@@ -46,7 +46,7 @@ function vidStream(num,ids) {
 			audio: false
 		},function(stream) {
 			video.addEventListener('canplaythrough',function(){
-				cameras.push(new Camera('cam'+num,video));
+				cameras.push(new Camera(num,video));
 				video.play();
 			});
 			if(navigator.mozGetUserMedia) video.mozSrcObject = stream;
