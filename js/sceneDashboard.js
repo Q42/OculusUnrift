@@ -6,24 +6,15 @@ var sceneDashboard = function(){
 	// Clear the canvas
 	hud.clearRect(0, 0, canvas.width, canvas.height);
 
-	var x = canvas.width / 2;
-	var y = canvas.height / 2;
-	var radius = Math.PI;
-	var startAngle = 1.1 * Math.PI;
-	var endAngle = 1.9 * Math.PI;
-	var counterClockwise = false;
-	// begin custom shape
-	hud.beginPath();
+	var meter = new Image();
 
-	hud.beginPath();
-    hud.arc(x, y, radius, startAngle, endAngle, counterClockwise);
-    hud.lineWidth = 15;
+	meter.onload = function() {
+		hud.save();
+    	hud.globalAlpha = 0.4;
+		hud.drawImage(imageObj, canvas.width/2-50, canvas.height/2,100,42);
+		hud.restore();
+	};
+	meter.src = '/img/meter.png';
 
-
-	// complete custom shape
-	hud.strokeStyle = 'red';
-    hud.stroke();
-
-
-	setTimeout(sceneCursor,2000);
+	//setTimeout(sceneBoot,8000);
 }
