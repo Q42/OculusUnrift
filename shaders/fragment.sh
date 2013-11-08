@@ -3,10 +3,13 @@
 precision highp float;
 #endif
 
-uniform sampler2D overlay;
-uniform sampler2D tex1;
-uniform sampler2D tex2;
-uniform int scene;
+uniform sampler2D overlay; //canvas2d
+uniform sampler2D tex1; //left
+uniform sampler2D tex2; //right
+uniform int scene; //which scene
+
+//for tv stuff
+uniform float iGlobalTime;
 
 varying highp vec2 vTextureCoord;
 varying vec2 p;
@@ -36,7 +39,43 @@ vec2 scene1dp(vec2 coo){
 	return coo;
 }
 vec4 scene1col(vec4 color) {
+	return color;
 	return color*vec4(1.,0.,0.5,1.);
+}
+
+float hash(in vec2 v) { return fract(sin(v[1])*43758.5453123); }
+
+//tv effect
+vec3 tvLeft(vec2 uv, float xOffset) {
+  float red   =   texture2D(  tex1,  vec2(uv.x + xOffset -0.01,uv.y)).r;
+  float green =   texture2D(  tex1,  vec2(uv.x + xOffset,    uv.y)).g;
+  float blue  = texture2D(  tex1,  vec2(uv.x + xOffset +0.01,uv.y)).b;
+  return vec3(red,green,blue);
+}
+vec3 tvRight(vec2 uv, float xOffset) {
+  float red   =   texture2D(  tex2,  vec2(uv.x + xOffset -0.01,uv.y)).r;
+  float green =   texture2D(  tex2,  vec2(uv.x + xOffset,    uv.y)).g;
+  float blue  = texture2D(  tex2,  vec2(uv.x + xOffset +0.01,uv.y)).b;
+  return vec3(red,green,blue);
+}
+vec4 tv(vec2 uv, bool left) {
+  float jerkOffset = (1.0-step(hash(vec2(iGlobalTime*1.3,5.0)),0.8))*0.05;
+
+  float wiggleOffset = hash(vec2(iGlobalTime*15.0,uv.y*80.0))*0.003;
+  float largeWiggleOffset = hash(vec2(iGlobalTime*1.0,uv.y*25.0))*0.004;
+
+  float xOffset = wiggleOffset + largeWiggleOffset + jerkOffset;
+
+  vec3 color;
+  if(left) color = tvLeft(uv,xOffset);
+	else color = tvRight(uv,xOffset);
+
+  float scanline = -0.2+sin(uv.y*800.0)*0.25;
+  color -= scanline;
+  color += vec3 (-0.3, 0., 0.);
+  color *= vec3 (2.6, 0.1, 0.1);
+
+  return vec4(color,1.0);
 }
 
 void main() {
@@ -57,11 +96,12 @@ void main() {
 	{
 		vec2 displace = left ? vec2(tc.x+0.25,tc.y) : vec2(tc.x-0.25,tc.y);
 
-		if(left) col = texture2D(tex1,displace);
-		else col = texture2D(tex2,displace);
-
 		//posprocessing (color) filters based on scene
-		if(scene==1) col = scene1col(col);
+		if(scene==1) col = tv(displace,left);
+		else {
+			if(left) col = texture2D(tex1,displace);
+			else col = texture2D(tex2,displace);
+		}
 
 		//add the overlay
 		vec4 ol = texture2D(overlay,displace);
