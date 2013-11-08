@@ -1,3 +1,4 @@
+var streams = [];
 addEventListener('DOMContentLoaded',function() {
 	var streaming = false,
 			width = 320,
@@ -8,16 +9,16 @@ addEventListener('DOMContentLoaded',function() {
 	MediaStreamTrack.getSources(function(l){
 		var vids = [];
 		for(var i=0;i<l.length;i++)
-			if(l[i].kind=='video') {
-				vids.push(l[i].id);
-			}
-		vidStream(1,vids);
-		vidStream(2,vids);
+			if(l[i].kind=='video') vids.push(l[i].id);
+		streams.push(new vidStream(1,vids));
+		streams.push(new vidStream(2,vids));
+		//streams[1].start(document.getElementsByTagName('select')[0][1].value);
 	});
 
 });
 
 function vidStream(num,ids) {
+	var me = this;
 	var video = document.querySelector('#vid'+num);
 
 	var _sel = document.createElement('select');
@@ -35,10 +36,10 @@ function vidStream(num,ids) {
 	}
 
 	_sel.addEventListener('change',function(){
-		if(_sel.value) startStream(_sel.value);
+		if(_sel.value) me.start(_sel.value);
 	});
 
-	function startStream(id){
+	this.start = function(id){
 		navigator.getMedia({
 			video: {optional: [{sourceId: id}]},
 			audio: false
@@ -53,6 +54,7 @@ function vidStream(num,ids) {
 			console.log("An error occured! " + err);
 		});
 	};
+
 };
 
 var cameras = [];
