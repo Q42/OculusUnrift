@@ -38,7 +38,7 @@ var sceneMumboJumbo = function(callback){
 			hud.fillRect(0, 0, canvas.width, canvas.height);
 
 		    blurp += texts[text_index].charAt(char_index);
-		    createjs.Sound.play('sounds/blip.mp3');
+		    createjs.Sound.play('sounds/keybip-2.mp3');
 
 			char_index += 1;
 

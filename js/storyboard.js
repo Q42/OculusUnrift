@@ -4,8 +4,8 @@ var storyboard = [
   sceneBoot,
   sceneCursor,
   sceneMumboJumbo,
-  scenePrinting,
-  sceneDashboard
+  scenePrinting/*,
+  sceneDashboard*/
 ];
 
 
@@ -56,6 +56,10 @@ var director = new (function () {
 
   self.replayToggle = function () {
     self.replay = !self.replay;
+  }
+
+  self.setScene = function (scene) {
+     self.currentSceneIndex = scene % storyboard.length;
   }
 
 })();

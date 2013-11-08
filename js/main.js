@@ -1,4 +1,9 @@
 /* ===== CANVAS 2D */
+
+function getURLParameter(name) {
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+}
+
 $(function(){
 	canvas = document.getElementById("hud-overlay");
 	hud = canvas.getContext("2d");
@@ -12,28 +17,39 @@ $(function(){
 	hud.fillStyle = '#000';
 	hud.fillRect(0, 0, canvas.width, canvas.height);
 
-  Mousetrap.bind('space', function() {
-    director.start();
-  });
+	Mousetrap.bind('space', function() {
+		director.start();
+	});
 
-  Mousetrap.bind('r', function() {
-    director.replayToggle();
-  });
+	Mousetrap.bind('r', function() {
+		director.replayToggle();
+	});
 
 
-  Mousetrap.bind('1', function() {
-    streams[0].toggleSource();
-  });
+	Mousetrap.bind('1', function() {
+		streams[0].toggleSource();
+	});
 
-  Mousetrap.bind('2', function() {
-    streams[1].toggleSource();
-  });
+	Mousetrap.bind('2', function() {
+		streams[1].toggleSource();
+	});
 
-  function preloadSound() {
+	Mousetrap.bind('x', function() {
+		camera.toggleOverlay();
+	});
+
+	var scene = getURLParameter('scene');
+	if (scene !== null) {
+		director.setScene(scene);
+		director.start();
+	}
+
+  	function preloadSound() {
 		var manifest = [
 			{ id: 'boot', src: 'sounds/robotpoweron.mp3' },
 			{ id: 'blip', src: 'sounds/blip.mp3' },
-			{ id: 'blip', src: 'sounds/macstartup.mp3' }
+			{ id: 'startup', src: 'sounds/macstartup.mp3' },
+			{ id: 'bips', src: 'sounds/keybip-2.mp3' }
 		];
 		createjs.Sound.addEventListener('fileload', handleLoad);
 		createjs.Sound.registerManifest(manifest);

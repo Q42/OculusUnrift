@@ -6,7 +6,7 @@ precision highp float;
 uniform sampler2D overlay; //canvas2d
 uniform sampler2D tex1; //left
 uniform sampler2D tex2; //right
-uniform int scene; //which scene
+uniform bool useOverlay; //which scene
 
 //for tv stuff
 uniform float iGlobalTime;
@@ -89,7 +89,7 @@ void main() {
 	vec4 col;
 
 	//preprocessing displacement filters
-	if(scene==1) otc = scene1dp(otc);
+	otc = scene1dp(otc);
 
 	//warp that shit
 	vec2 tc = HmdWarp(otc, ScreenCenter);
@@ -99,8 +99,8 @@ void main() {
 	{
 		vec2 displace = left ? vec2(tc.x+0.25,tc.y) : vec2(tc.x-0.25,tc.y);
 
-		//posprocessing (color) filters based on scene
-		if(scene==1) col = tv(displace,left);
+		//posprocessing (color) filters
+		if(useOverlay) col = tv(displace,left);
 		else {
 			if(left) col = texture2D(tex1,displace);
 			else col = texture2D(tex2,displace);
