@@ -14,6 +14,7 @@ var director = new (function () {
 
   self.running = false;
   self.currentSceneIndex = 0;
+  self.replay = false;
 
   self.playCurrentScene = function () {
     var scene = storyboard[self.currentSceneIndex];
@@ -34,7 +35,7 @@ var director = new (function () {
 
   self.sceneCallBack = function () {
     if (!self.running) return;
-    self.currentSceneIndex++;
+    if (!self.replay) self.currentSceneIndex++;
     if (self.currentSceneIndex >= storyboard.length) {
       self.currentSceneIndex = 0;
       self.running = false;
@@ -52,6 +53,14 @@ var director = new (function () {
   self.stop = function() {
     self.running = false;
   };
+
+  self.replayToggle = function () {
+    self.replay = !self.replay;
+  }
+
+  self.setScene = function (scene) {
+     self.currentSceneIndex = scene % storyboard.length;
+  }
 
 })();
 

@@ -1,11 +1,5 @@
 // ========= SCENE CURSOR
 var sceneCursor = function(callback){
-	// global var hud references to canvas.getContext("2d")
-
-	// To skip this scene:
-	//sceneMumboJumbo();
-	//return;
-
 	var blinkCount = 0;
 	function showCursor() {
 		blinkCount++;

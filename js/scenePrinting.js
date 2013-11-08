@@ -1,5 +1,4 @@
-var scenePrinting = function(callback){
-	// Clear the canvas
+var scenePrinting = function(callback) {
 	hud.clearRect(0, 0, canvas.width, canvas.height);
 
 	hud.font = '20pt "visitor_tt1_brkregular" normal';
@@ -7,5 +6,8 @@ var scenePrinting = function(callback){
 	hud.textAlign = 'center';
     hud.fillText('scene printing...', center_x, center_y);
 	showFrequency = true;
-  setTimeout(callback, 2000);
+	setTimeout(function() {
+		showFrequency = false;
+		callback();
+	}, 2000);
 };

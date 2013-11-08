@@ -1,9 +1,5 @@
 // ========= SCENE BOOT
-var sceneDashboard = function(callback){
-	// global var hud references to canvas.gethud("2d")
-	
-	// To skip this scene:
-	// Clear the canvas
+var sceneDashboard = function(callback) {
 	hud.clearRect(0, 0, canvas.width, canvas.height);
 
 	var TO_RADIANS = Math.PI/180;

@@ -1,11 +1,5 @@
 // ========= SCENE BOOT
-var sceneCrash = function(callback){
-  // global var hud references to canvas.getContext("2d")
-  
-  // To skip this scene:
-  //sceneCursor();
-  //return;
-
+var sceneCrash = function(callback) {
   var lines = ['A fatal exception 0E has occurred at 0028:C011E36 in VXD VMM(01) +',
                '0001010E36. The current consciousness will be terminated.',
                '',
