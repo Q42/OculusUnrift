@@ -36,7 +36,7 @@ vec2 scene1dp(vec2 coo){
 	return coo;
 }
 vec4 scene1col(vec4 color) {
-	return color;
+	return color*vec4(1.,0.,0.5,1.);
 }
 
 void main() {
