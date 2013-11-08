@@ -1,7 +1,11 @@
-function Camera(num,video){
-	var _el = document.getElementById('cam'+num)
+function Camera(){
+	var _el = document.getElementById('cam')
 		, inited = false
 		, shaders = {}
+		, cams = []
+		, texAttr = null
+		, pos = null
+		;
 		;
 
 	var gl = _el.getContext("experimental-webgl");
@@ -16,23 +20,25 @@ function Camera(num,video){
 	gl.bindBuffer(gl.ARRAY_BUFFER, quad);
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1.,-1.,1.,-1.,-1.,1.,1.,-1.,1.,1.,-1.,1.]), gl.STATIC_DRAW);
 
-	var texture = gl.createTexture();
-	gl.bindTexture(gl.TEXTURE_2D, texture);
-	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-	gl.activeTexture(gl.TEXTURE0);
-
-	var overlayC = new Overlay(num);
 	var overlay = gl.createTexture();
-	gl.activeTexture(gl.TEXTURE1);
 	gl.bindTexture(gl.TEXTURE_2D, overlay);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 	gl.activeTexture(gl.TEXTURE1);
+
+	this.addStream = function(cam,num){
+		cam.num = num;
+		cam.texture = gl.createTexture();
+		gl.activeTexture(gl['TEXTURE'+num]);
+		gl.bindTexture(gl.TEXTURE_2D, cam.texture);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+		cams.push(cam);
+	};
 
 	function addShader(uri,type){
 		$.get(uri,function(res){
@@ -48,13 +54,25 @@ function Camera(num,video){
 	};
 
 	function init(){
-		if(!shaders['vertex'] || !shaders['fragment']) return;
+		if(inited || !shaders['vertex'] || !shaders['fragment']) return;
 		inited = true;
 		gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
 		gl.enable(gl.BLEND);
 		gl.clearColor(0,0,0,0);
-		gl.viewport(0,0,640,480);
+		gl.viewport(0,0,1280,480);
 		gl.linkProgram(shader);
+		pos = gl.getAttribLocation(shader, "pos");
+		texAttr = gl.getAttribLocation(shader, "aTextureCoord");
+	};
+
+	function drawTexture(num,name,texture,item) {
+		gl.activeTexture(gl['TEXTURE'+num]);
+		gl.uniform1i(gl.getUniformLocation(shader, name), num);
+		gl.enableVertexAttribArray(texAttr);
+		gl.bindTexture(gl.TEXTURE_2D, texture);
+		gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, item);
+		gl.disableVertexAttribArray(texAttr);
 	};
 
 	this.draw = function(){
@@ -62,24 +80,10 @@ function Camera(num,video){
 		gl.clear(gl.COLOR_BUFFER_BIT);
 		gl.useProgram(shader);
 
-		var pos = gl.getAttribLocation(shader, "pos");
-		var texAttr = gl.getAttribLocation(shader, "aTextureCoord");
+		drawTexture(0,'overlay',overlay,document.getElementById('hud-overlay'));
 
-		gl.activeTexture(gl.TEXTURE0);
-		gl.enableVertexAttribArray(texAttr);
-		gl.bindTexture(gl.TEXTURE_2D, texture);
-		gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
-		gl.uniform1i(gl.getUniformLocation(shader, 'tex'), 0);
-		gl.disableVertexAttribArray(texAttr);
-
-		gl.activeTexture(gl.TEXTURE1);
-		gl.enableVertexAttribArray(texAttr);
-		gl.bindTexture(gl.TEXTURE_2D, overlay);
-		gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, overlayC.canvas);
-		gl.uniform1i(gl.getUniformLocation(shader, 'overlay'), 1);
-		gl.disableVertexAttribArray(texAttr);
+		for(var i=0;i<cams.length;i++)
+			drawTexture(cams[i].num,'tex'+cams[i].num,cams[i].texture,cams[i])
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, quad);
 		gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
