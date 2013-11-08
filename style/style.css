@@ -13,7 +13,7 @@ video {
 	display: none;
 }
 canvas.video {
-	width: 640px;
+	width: 1280px;
 	height: 480px;
 	outline: 1px solid #00f;
 	float: left;

@@ -1,10 +1,13 @@
 var streams = [];
+var camera;
 addEventListener('DOMContentLoaded',function() {
 	var streaming = false,
 			width = 320,
 			height = 0;
 
 	navigator.getMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+	camera = new Camera();
 
 	MediaStreamTrack.getSources(function(l){
 		var vids = [];
@@ -13,8 +16,16 @@ addEventListener('DOMContentLoaded',function() {
 		streams.push(new vidStream(1,vids));
 		streams.push(new vidStream(2,vids));
 		//autoselect first videoinput for right screen
+		//streams[0].start(document.getElementsByTagName('select')[0][1].value);
 		//streams[1].start(document.getElementsByTagName('select')[0][1].value);
 	});
+
+	var raf = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.requestAnimationFrame;
+	(function drawFrame(){
+		camera.draw();
+		raf(drawFrame);
+	})();
+
 
 });
 
@@ -46,7 +57,7 @@ function vidStream(num,ids) {
 			audio: false
 		},function(stream) {
 			video.addEventListener('canplaythrough',function(){
-				cameras.push(new Camera(num,video));
+				camera.addStream(video,num);
 				video.play();
 			});
 			if(navigator.mozGetUserMedia) video.mozSrcObject = stream;
@@ -57,11 +68,3 @@ function vidStream(num,ids) {
 	};
 
 };
-
-var cameras = [];
-var raf = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.requestAnimationFrame;
-(function drawFrame(){
-	for(var i=0;i<cameras.length;i++)
-		cameras[i].draw();
-	raf(drawFrame);
-})();
