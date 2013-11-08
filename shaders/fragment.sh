@@ -11,8 +11,8 @@ uniform int scene;
 varying highp vec2 vTextureCoord;
 varying vec2 p;
 
-vec2 res = vec2(1024.,640.);
-float pi = 3.14159265358979323846264;
+const vec2 res = vec2(1024.,640.);
+const float pi = 3.14159265358979323846264;
 
 // voor w00tcamp oculus unrift
 const vec2 Scale = vec2(0.1469278, 0.2350845);
@@ -32,7 +32,7 @@ vec2 HmdWarp(vec2 in01, vec2 LensCenter) {
 	 return LensCenter + Scale * rvector;
 }
 //shader scene 1
-vec4 bla(vec4 color){
+vec4 scene1(vec4 color){
 	return vec4(1.,0.,0.,1.);
 }
 
@@ -63,9 +63,7 @@ void main() {
 		vec4 ol = texture2D(overlay,dp);
 		col=ol+col*(1.-ol.a);
 
-		if(scene==1) {
-			col = bla(col);
-		}
+		if(scene==1) col = scene1(col);
 
 		gl_FragColor = col;
 	}
