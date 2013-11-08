@@ -40,13 +40,13 @@ $(function(){
 			analyser.fftSize = 512;
 			var mediaStreamSource = audioContext.createMediaStreamSource(stream);
 			mediaStreamSource.connect(analyser);
-			var freqByteData = new Uint8Array(analyser.frequencyBinCount);
+			var freqByteData = new Uint8Array(analyser.frequencyBinCount / 4);
 
 			function draw() {
 				analyser.getByteFrequencyData(freqByteData);
 				hud.clearRect(0, 0, canvas.width, canvas.height);
 				hud.fillStyle = 'rgba(255, 255, 255, 0.1)';
-				for (var i = 0; i < freqByteData.length / 4; i++) {
+				for (var i = 0; i < freqByteData.length; i++) {
 					hud.fillRect(350 + 8*i, canvas.height/2 + 100, 10, -1 * freqByteData[i]);
 					//hud.fillRect(350 + 8*i, canvas.height / 2  + 100 - freqByteData[i], 4, 4);
 				}
