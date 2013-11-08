@@ -13,7 +13,7 @@ var sceneMumboJumbo = function(){
 		hud.font = '16pt "visitor_tt1_brkregular" normal';
 		hud.fillStyle = '#ffffff';
 		hud.textAlign = 'center';
-		hud.fillText(txt, center_x, 200);
+		hud.fillText(txt, center_x, center_y-200);
 		//hud.lineWidth = 1;
       	//hud.strokeStyle = 'blue';
       	//hud.strokeText(txt, center_x, 200);
