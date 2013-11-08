@@ -12,6 +12,7 @@ addEventListener('DOMContentLoaded',function() {
 			if(l[i].kind=='video') vids.push(l[i].id);
 		streams.push(new vidStream(1,vids));
 		streams.push(new vidStream(2,vids));
+		//autoselect first videoinput for right screen
 		//streams[1].start(document.getElementsByTagName('select')[0][1].value);
 	});
 

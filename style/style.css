@@ -12,7 +12,7 @@ html {
 video {
 	display: none;
 }
-canvas {
+canvas.video {
 	width: 640px;
 	height: 480px;
 	outline: 1px solid #00f;
