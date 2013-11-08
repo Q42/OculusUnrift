@@ -35,21 +35,30 @@ function vidStream(num,ids) {
 	}
 
 	_sel.addEventListener('change',function(){
-		if(_sel.value) startStream(video,_sel.value);
+		if(_sel.value) startStream(_sel.value);
 	});
 
-	function startStream(video,id){
+	function startStream(id){
 		navigator.getMedia({
 			video: {optional: [{sourceId: id}]},
 			audio: false
 		},function(stream) {
-			if(navigator.mozGetUserMedia)
-				video.mozSrcObject = stream;
-			else
-				video.src = (window.URL || window.webkitURL).createObjectURL(stream);
-			video.play();
+			video.addEventListener('canplaythrough',function(){
+				cameras.push(new Camera('cam'+num,video));
+				video.play();
+			});
+			if(navigator.mozGetUserMedia) video.mozSrcObject = stream;
+			else video.src = (window.URL || window.webkitURL).createObjectURL(stream);
 		},function(err) {
 			console.log("An error occured! " + err);
 		});
 	};
 };
+
+var cameras = [];
+var raf = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.requestAnimationFrame;
+(function drawFrame(){
+	for(var i=0;i<cameras.length;i++)
+		cameras[i].draw();
+	raf(drawFrame);
+})();

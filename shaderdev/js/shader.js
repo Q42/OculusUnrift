@@ -1,6 +1,6 @@
-function Camera(id){
+function Camera(id,video){
 	var _el = document.getElementById(id)
-		, raf = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.requestAnimationFrame
+		, inited = false
 		, shaders = {}
 		;
 
@@ -17,30 +17,12 @@ function Camera(id){
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1.,-1.,1.,-1.,-1.,1.,1.,-1.,1.,1.,-1.,1.]), gl.STATIC_DRAW);
 
 	var texture = gl.createTexture();
-	var stream = new Image;
-	stream.onload = function(){
-		gl.bindTexture(gl.TEXTURE_2D, texture);
-		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, stream);
-
-		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-
-		gl.bindTexture(gl.TEXTURE_2D, null);
-		init();
-	};
-	stream.src = 'img/testure.jpg';
-
-	function init(){
-		if(!stream.width || !shaders['vertex'] || !shaders['fragment']) return;
-		console.log('init..');
-		gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
-		gl.enable(gl.BLEND);
-		gl.clearColor(0,0,0,0);
-		gl.viewport(0,0,640,480);
-		gl.linkProgram(shader);
-		drawFrame();
-	};
+	gl.bindTexture(gl.TEXTURE_2D, texture);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+	gl.activeTexture(gl.TEXTURE0);
 
 	function addShader(uri,type){
 		$.get(uri,function(res){
@@ -55,17 +37,28 @@ function Camera(id){
 		});
 	};
 
-	function drawFrame(){
+	function init(){
+		if(!shaders['vertex'] || !shaders['fragment']) return;
+		inited = true;
+		gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
+		gl.enable(gl.BLEND);
+		gl.clearColor(0,0,0,0);
+		gl.viewport(0,0,640,480);
+		gl.linkProgram(shader);
+	};
+
+	this.draw = function(){
+		if(!inited) return;
 		gl.clear(gl.COLOR_BUFFER_BIT);
 		gl.useProgram(shader);
 
 		var pos = gl.getAttribLocation(shader, "pos");
-
 		var texAttr = gl.getAttribLocation(shader, "aTextureCoord");
-		gl.enableVertexAttribArray(texAttr);
 
-		gl.activeTexture(gl.TEXTURE0);
+		gl.enableVertexAttribArray(texAttr);
 		gl.bindTexture(gl.TEXTURE_2D, texture);
+		gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
 		gl.uniform1i(gl.getUniformLocation(shader, 'tex'), 0);
 		gl.disableVertexAttribArray(texAttr);
 

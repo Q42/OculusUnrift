@@ -17,6 +17,5 @@ float pi = 3.14159265358979323846264;
 
 void main() {
 	vec2 u = gl_FragCoord.xy/res.xy;
-	vec2 p = vec2(u.x,1.-u.y);
-	gl_FragColor = texture2D(tex,p);
+	gl_FragColor = texture2D(tex,u);
 }
