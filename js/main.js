@@ -15,7 +15,7 @@ $(function(){
 	});
 
 	hud.fillStyle = '#000';
-	hud.fillRect(0, 0, 512, 480);
+	hud.fillRect(0, 0, canvas.width, canvas.height);
 
 	document.getElementById('container').addEventListener('click', function() {
 		sceneBoot();
