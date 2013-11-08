@@ -7,5 +7,8 @@ var scenePrinting = function(callback){
 	hud.textAlign = 'center';
     hud.fillText('scene printing...', center_x, center_y);
 	showFrequency = true;
-  setTimeout(callback, 2000);
+	setTimeout(function() {
+		showFrequency = false;
+		callback();
+	}, 2000);
 };
