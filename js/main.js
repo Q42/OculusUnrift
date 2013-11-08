@@ -3,6 +3,11 @@ $(function(){
 	canvas = document.getElementById("hud-overlay");
 	hud = canvas.getContext("2d");
 
+	document.getElementById('readyForDemo').addEventListener('click', function() {
+		$('.camselect').hide();
+		$(this).hide();
+	});
+
 	document.getElementById('container').addEventListener('click', function() {
 		sceneBoot();
 	});
@@ -30,17 +35,18 @@ $(function(){
 	            clearTimeout(id);
 	        };
 	}());*/
-});
 
-addEventListener('DOMContentLoaded', function() {
-	var manifest = [
-		{ id: 'boot', src: 'sounds/robotpoweron.mp3' },
-		{ id: 'blip', src: 'sounds/blip.mp3' }
-	];
-	createjs.Sound.addEventListener('fileload', handleLoad);
-	createjs.Sound.registerManifest(manifest);
-	function handleLoad(event) {
-		console.log('loaded ' + event.src);
-	}
-});
+	function preloadSound() {
+		var manifest = [
+			{ id: 'boot', src: 'sounds/robotpoweron.mp3' },
+			{ id: 'blip', src: 'sounds/blip.mp3' }
+		];
+		createjs.Sound.addEventListener('fileload', handleLoad);
+		createjs.Sound.registerManifest(manifest);
+		function handleLoad(event) {
+			console.log('loaded ' + event.src);
+		}
+	};
 
+	preloadSound();
+});
