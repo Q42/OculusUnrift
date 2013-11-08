@@ -11,10 +11,10 @@ var sceneBoot = function(){
 
 	hud.font = '12pt "visitor_tt1_brkregular" normal';
 	hud.fillStyle = '#000';
+	hud.textAlign = 'center';
+    hud.fillText('scene boot...', center_x, center_y);
 
-    hud.fillText('scene boot...', 200, 220);
+    //createjs.Sound.play('sounds/robotpoweron.mp3');
 
-    createjs.Sound.play('sounds/robotpoweron.mp3');
-
-	setTimeout(sceneCursor,8000);
+	setTimeout(sceneCursor,2000);
 }

@@ -3,6 +3,12 @@ $(function(){
 	canvas = document.getElementById("hud-overlay");
 	hud = canvas.getContext("2d");
 
+	canvas_width = canvas.width;
+	canvas_height = canvas.height;
+
+	center_x = canvas.width/2;
+	center_y = canvas.height/2;
+
 	document.getElementById('readyForDemo').addEventListener('click', function() {
 		$('.camselect').hide();
 		$(this).hide();
