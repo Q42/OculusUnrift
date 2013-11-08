@@ -32,7 +32,7 @@ var sceneMumboJumbo = function(){
 
 			hud.font = '9pt "visitor_tt1_brkregular" normal';
 			hud.fillStyle = '#ffffff';
-		    hud.fillText(blurp, 50, 100);
+		    hud.fillText(blurp, 200, 100);
 		    if(char_index == texts[text_index].length) {
 	    		char_index = 0;
 				if(text_index<texts.length-1){

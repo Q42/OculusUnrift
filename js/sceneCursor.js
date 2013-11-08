@@ -6,6 +6,6 @@ var sceneCursor = function(){
 
 	hud.font = '12pt "visitor_tt1_brkregular" normal';
 	hud.fillStyle = '#ffffff';
-    hud.fillText('scene cursor...', 120, 220);
+    hud.fillText('scene cursor...', 200, 220);
 	setTimeout(sceneMumboJumbo,1000);
 }
