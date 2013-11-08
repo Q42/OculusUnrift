@@ -1,19 +1,28 @@
 // ========= SCENE BOOT
 var sceneDashboard = function(){
-	// global var hud references to canvas.getContext("2d")
+	// global var hud references to canvas.gethud("2d")
 	
 	// To skip this scene:
 	// Clear the canvas
 	hud.clearRect(0, 0, canvas.width, canvas.height);
 
-	var imageObj = new Image();
-
-	imageObj.onload = function() {
-		context.drawImage(imageObj, 0, 0);
+	var meter = new Image();
+	meter.onload = function() {
+		hud.save();
+    	hud.globalAlpha = 0.4;
+		hud.drawImage(meter, canvas.width/2-50, canvas.height/2,100,42);
+		hud.restore();
 	};
-	imageObj.src = '';
+	meter.src = '/img/meter.png';
 
-    //createjs.Sound.play('sounds/robotpoweron.mp3');
+	var needle = new Image();
+	needle.onload = function() {
+		hud.save();
+    	hud.globalAlpha = 0.4;
+		hud.drawImage(needle, canvas.width/2, canvas.height/2-20,20,90);
+		hud.restore();
+	};
+	needle.src = '/img/needle.png';
 
-	setTimeout(sceneCursor,2000);
+	//setTimeout(sceneBoot,8000);
 }

@@ -5,7 +5,7 @@ var scenePrinting = function(){
 	hud.font = '20pt "visitor_tt1_brkregular" normal';
 	hud.fillStyle = '#ffffff';
 	hud.textAlign = 'center';
-  hud.fillText('scene printing...', center_x, center_y);
-
-  setTimeout(sceneCrash, 2000);
+    hud.fillText('scene printing...', center_x, center_y);
+	showFrequency = true;
+    setTimeout(sceneDashboard, 2000);
 };
