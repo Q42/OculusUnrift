@@ -8,7 +8,7 @@ $(function(){
 		$(this).hide();
 	});
 
-	hud.fillStyle = '#000';
+	hud.fillStyle = '#fff';
 	hud.fillRect(0, 0, 512, 480);
 
 	document.getElementById('container').addEventListener('click', function() {

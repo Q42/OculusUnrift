@@ -2,11 +2,11 @@
 var sceneBoot = function(){
 	// global var hud references to canvas.getContext("2d")
 
-	hud.fillStyle = 'rgba(0,0,0,1)';
+	hud.fillStyle = '#fff';
 	hud.fillRect(0, 0, 512, 480);
 
 	hud.font = '12pt "visitor_tt1_brkregular" normal';
-	hud.fillStyle = '#ffffff';
+	hud.fillStyle = '#000';
 
     hud.fillText('scene boot...', 200, 220);
 
