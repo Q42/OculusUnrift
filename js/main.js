@@ -43,11 +43,15 @@ $(function(){
 			var freqByteData = new Uint8Array(analyser.frequencyBinCount / 4);
 
 			function draw() {
+				if (!window.showFrequency) {
+					requestAnimationFrame(draw);
+					return;
+				}
 				analyser.getByteFrequencyData(freqByteData);
-				hud.clearRect(0, 0, canvas.width, canvas.height);
+				//hud.clearRect(0, 0, canvas.width, canvas.height);
 				hud.fillStyle = 'rgba(255, 255, 255, 0.1)';
 				for (var i = 0; i < freqByteData.length; i++) {
-					hud.fillRect(350 + 8*i, canvas.height/2 + 100, 10, -1 * freqByteData[i]);
+					hud.fillRect(300 + 8*i, canvas.height/2 + 100, 10, -1 * freqByteData[i]);
 					//hud.fillRect(350 + 8*i, canvas.height / 2  + 100 - freqByteData[i], 4, 4);
 				}
 				requestAnimationFrame(draw);
