@@ -16,8 +16,25 @@ function Camera(id){
 	gl.bindBuffer(gl.ARRAY_BUFFER, quad);
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1.,-1.,1.,-1.,-1.,1.,1.,-1.,1.,1.,-1.,1.]), gl.STATIC_DRAW);
 
+	var texture = gl.createTexture();
+	var stream = new Image;
+	stream.onload = function(){
+		gl.bindTexture(gl.TEXTURE_2D, texture);
+		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, stream);
+
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+
+		gl.bindTexture(gl.TEXTURE_2D, null);
+		console.log('loaded texture',stream.width);
+		init();
+	};
+	stream.src = 'img/testure.jpg';
+
 	function init(){
-		if(!shaders['vertex'] || !shaders['fragment']) return;
+		if(!stream.width || !shaders['vertex'] || !shaders['fragment']) return;
+		console.log('init..');
 		gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
 		gl.enable(gl.BLEND);
 		gl.clearColor(0,0,0,0);
@@ -32,7 +49,7 @@ function Camera(id){
 			gl.shaderSource(sh,res);
 			gl.compileShader(sh);
 			if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS))
-				console.error('Shader Syntax Error in ['+uri+']:\n'+gl.getShaderInfoLog(shader));
+				return console.error('Shader Syntax Error in ['+uri+']:\n',gl.getShaderInfoLog(sh));
 			shaders[type]=sh;
 			gl.attachShader(shader,sh);
 			init();
@@ -44,6 +61,14 @@ function Camera(id){
 		gl.useProgram(shader);
 
 		var pos = gl.getAttribLocation(shader, "pos");
+
+		var texAttr = gl.getAttribLocation(shader, "aTextureCoord");
+		gl.enableVertexAttribArray(texAttr);
+
+		gl.activeTexture(gl.TEXTURE0);
+		gl.bindTexture(gl.TEXTURE_2D, texture);
+		gl.uniform1i(gl.getUniformLocation(shader, 'tex'), 0);
+		gl.disableVertexAttribArray(texAttr);
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, quad);
 		gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
