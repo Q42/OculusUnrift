@@ -60,7 +60,8 @@ void main() {
 			col = texture2D(tex2,dp);
 		}
 
-		col+=texture2D(overlay,dp);
+		vec4 ol = texture2D(overlay,dp);
+		col=ol+col*(1.-ol.a);
 
 		if(scene==1) {
 			col = bla(col);
