@@ -19,6 +19,7 @@ $(function(){
 
 	document.getElementById('container').addEventListener('click', function() {
 		sceneBoot();
+		//sceneDashboard();
 	});
 
 	function preloadSound() {
