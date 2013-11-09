@@ -52,16 +52,20 @@ $(function(){
     camera.toggleHighlight();
   });
 
+  var lightsOn = true;
 
   var voiceCommands = {
-     'light': function () {
+    'light': function () {
       createjs.Sound.play('sounds/affirmative.mp3');
-      Lights.send('PUT', '/groups/0/action', { on: true });
+      Lights.send('PUT', '/groups/0/action', { on: lightsOn });
+      lightsOn = !lightsOn;
     },
+    /*
     'lights off': function () {
       createjs.Sound.play('sounds/affirmative.mp3');
       Lights.send('PUT', '/groups/0/action', { on: false });
     },
+    */
     'start': function () {
       director.start();
     },
