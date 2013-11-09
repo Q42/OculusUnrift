@@ -15,6 +15,39 @@ var sceneSound = function(callback) {
 
 	initFrequency();
 
+  cursor = new Cursor(center_x-200,center_y-300,6,50, 8, 20);
+
+
+  var lines = [
+    "A long time ago, in a galaxy far, far away...",
+    "",
+    "It is a period of civil war. Rebel",
+    "spaceships, striking from a hidden",
+    "base, have won their first victory",
+    "against the evil Galactic Empire.",
+    "",
+    "During the battle, Rebel spies managed",
+    "to steal secret plans to the Empire's",
+    "ultimate weapon, the Death Star, an",
+    "armored space station with enough",
+    "power to destroy an entire planet.",
+    "",
+    "Pursued by the Empire's sinister agents,",
+    "Princess Leia races home aboard her",
+    "starship, custodian of the stolen plans",
+    "that can save her people and restore",
+    "freedom to the galaxy..."
+  ];
+
+  var currentLine = 0;
+  function updateLine() {
+    if (currentLine >= lines.length) return;
+    cursor.appendLine(lines[currentLine]);
+    currentLine++;
+    setTimeout(updateLine, 500);
+  }
+
+  updateLine();
 
   var voiceCommands = {
     'find': function () {
@@ -35,8 +68,7 @@ var sceneSound = function(callback) {
   });
 
   speech.setStreamListener(function(text) {
-    interimSpeech = text;
-    draw();
+    cursor.appendLine(text);
   });
 
 
@@ -57,7 +89,6 @@ var sceneSound = function(callback) {
 		if (!running) {
 			return;
 		}
-		hud.clearRect(0, 0, canvas.width, canvas.height);
 
 		if (picture != null) {
 			hud.drawImage(picture, canvas.width, 0,
@@ -71,7 +102,9 @@ var sceneSound = function(callback) {
 			}
 		} else {
 			// Frequency
-			analyser.getByteFrequencyData(freqByteData);
+      hud.clearRect(0, canvas.height/2 + 100 - 256, canvas.width, 256);
+
+      analyser.getByteFrequencyData(freqByteData);
 			hud.fillStyle = 'rgba(255, 255, 255, .3)';
 			for (var i = 0; i < freqByteData.length; i++) {
 				hud.fillRect(300 + 8*i, canvas.height/2 + 100, 4, -1 * freqByteData[i]);
@@ -80,7 +113,7 @@ var sceneSound = function(callback) {
 
 			// Speech
 			//hud.fillText(finalSpeech, center_x, center_y);
-			hud.fillText(interimSpeech, center_x, center_y+150);
+			//hud.fillText(interimSpeech, center_x, center_y+150);
 		}
 
 		requestAnimationFrame(draw);

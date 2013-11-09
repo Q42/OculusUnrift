@@ -1,5 +1,5 @@
 var sceneFace = function(callback) {
-	end_x = canvas.width/2;
+	end_x = -100;
 	end_y = canvas.height/2;
 
 	hud.clearRect(0, 0, canvas.width, canvas.height);
