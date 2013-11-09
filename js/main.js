@@ -41,6 +41,10 @@ $(function(){
 		camera.toggleOverlay();
 	});
 
+	Mousetrap.bind('z', function() {
+		camera.toggleDemoMode();
+	});
+
   Mousetrap.bind('h', function() {
     camera.toggleHighlight();
   });
