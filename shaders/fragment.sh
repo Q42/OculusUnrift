@@ -74,7 +74,7 @@ vec4 tv(vec2 uv, bool left) {
 
 //edge highlighting
 vec4 getTexLeft(vec2 uv) {
-	return texture2D(tex2, uv);
+	return texture2D(tex1, uv);
 }
 vec4 getTexRight(vec2 uv) {
 	return texture2D(tex2, uv);
