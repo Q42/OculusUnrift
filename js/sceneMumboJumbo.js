@@ -8,8 +8,8 @@ var sceneMumboJumbo = function(callback){
 	var texts = ['initializing boot sequence...', 'deleting all files...', 're-allocating memory...'];
 	var blurp = '';
 	var flicker = 0;
-	createjs.Sound.play('sounds/checklist.mp3');
-	console.log("PLLAY");
+	//createjs.Sound.play('sounds/checklist.mp3');
+	//console.log("PLLAY");
 
 	function setText(txt){
 		hud.font = '16pt "visitor_tt1_brkregular" normal';
@@ -55,7 +55,10 @@ var sceneMumboJumbo = function(callback){
 					setTimeout(draw,2500);
 				}
 				else {
-					setTimeout(callback, 2500);
+					setTimeout(function() {
+						createjs.Sound.play('sounds/online.mp3');
+						callback();
+					}, 2500);
 				}
 				
 			}else{

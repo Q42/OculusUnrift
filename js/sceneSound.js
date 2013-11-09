@@ -17,7 +17,7 @@ var sceneSound = function(callback) {
 
 
   var voiceCommands = {
-    'next': function () {
+    'marcel': function () {
       nextScene();
     },
     'picture': function () {
