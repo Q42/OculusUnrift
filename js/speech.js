@@ -4,11 +4,14 @@ var speech = new (function () {
   var _finalEvents = {};
   var _interimEvents = {};
 
+  var _recognizeEventTimeout = null;
+
 
   function onSpeechResult(event) {
     //console.log(event);
     var recognized = false;
     for (var i = event.resultIndex; i < event.results.length; ++i) {
+      if (_recognizeEventTimeout)  clearTimeout(_recognizeEventTimeout);
       if (event.results[i].isFinal) {
         finalSpeech = event.results[i][0].transcript;
         console.log('final', i + ":" + finalSpeech);
@@ -32,6 +35,8 @@ var speech = new (function () {
     if (recognized) {
       _recognition.abort();
     }
+
+    _recognizeEventTimeout = setTimeout(function () { _recognition.abort()}, 1000);
   }
 
   function init() {
