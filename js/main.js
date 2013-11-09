@@ -81,6 +81,7 @@ $(function(){
 		var manifest = [
 			{ id: 'boot', src: 'sounds/robotpoweron.mp3' },
 			{ id: 'blip', src: 'sounds/blip.mp3' },
+      { id: 'picture', src: 'sounds/picture.mp3' },
 			{ id: 'startup', src: 'sounds/macstartup.mp3' },
       { id: 'checklist', src: 'sounds/online.mp3' },
       { id: 'affirmative', src: 'sounds/affirmative.mp3' },

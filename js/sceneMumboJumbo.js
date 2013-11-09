@@ -41,7 +41,7 @@ var sceneMumboJumbo = function(callback){
 
 				character = texts[text_index].charAt(char_index)
 		    blurp += character;
-		    if (character != ' ') createjs.Sound.play('sounds/bipone.mp3');
+		    if (character != ' ') createjs.Sound.play('sounds/bipone.mp3', {volume:0.5});
 
 			char_index += 1;
 
