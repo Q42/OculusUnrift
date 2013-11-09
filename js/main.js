@@ -41,6 +41,11 @@ $(function(){
 		camera.toggleOverlay();
 	});
 
+  Mousetrap.bind('h', function() {
+    camera.toggleHighlight();
+  });
+
+
   var voiceCommands = {
      'lights on': function () {
       Lights.send('PUT', '/groups/0/action', { on: true });

@@ -79,9 +79,8 @@ vec4 getTexLeft(vec2 uv) {
 vec4 getTexRight(vec2 uv) {
 	return texture2D(tex2, uv);
 }
-float lookup(vec2 p, float dx, float dy, bool left)
+float lookup(vec2 p, float dx, float dy, bool left, float d)
 {
-	float d = sin(iGlobalTime * 5.0)*1.5 + 1.5; // kernel offset
 	vec2 uv = (p.xy + vec2(dx * d, dy * d)) / res;
 	vec4 c = left ? getTexLeft(uv) : getTexRight(uv);
 
@@ -90,28 +89,30 @@ float lookup(vec2 p, float dx, float dy, bool left)
 }
 vec4 highlight(vec2 p, bool left) {
 
+	float d = sin(iGlobalTime / 6.0)*1. + 1.5; // kernel offset
+
 	// simple sobel edge detection
 	float gx = 0.0;
-	gx += -1.0 * lookup(p, -1.0, -1.0, left);
-	gx += -2.0 * lookup(p, -1.0,  0.0, left);
-	gx += -1.0 * lookup(p, -1.0,  1.0, left);
-	gx +=  1.0 * lookup(p,  1.0, -1.0, left);
-	gx +=  2.0 * lookup(p,  1.0,  0.0, left);
-	gx +=  1.0 * lookup(p,  1.0,  1.0, left);
+	gx += -1.0 * lookup(p, -1.0, -1.0, left, d);
+	gx += -2.0 * lookup(p, -1.0,  0.0, left, d);
+	gx += -1.0 * lookup(p, -1.0,  1.0, left, d);
+	gx +=  1.0 * lookup(p,  1.0, -1.0, left, d);
+	gx +=  2.0 * lookup(p,  1.0,  0.0, left, d);
+	gx +=  1.0 * lookup(p,  1.0,  1.0, left, d);
 
 	float gy = 0.0;
-	gy += -1.0 * lookup(p, -1.0, -1.0, left);
-	gy += -2.0 * lookup(p,  0.0, -1.0, left);
-	gy += -1.0 * lookup(p,  1.0, -1.0, left);
-	gy +=  1.0 * lookup(p, -1.0,  1.0, left);
-	gy +=  2.0 * lookup(p,  0.0,  1.0, left);
-	gy +=  1.0 * lookup(p,  1.0,  1.0, left);
+	gy += -1.0 * lookup(p, -1.0, -1.0, left, d);
+	gy += -2.0 * lookup(p,  0.0, -1.0, left, d);
+	gy += -1.0 * lookup(p,  1.0, -1.0, left, d);
+	gy +=  1.0 * lookup(p, -1.0,  1.0, left, d);
+	gy +=  2.0 * lookup(p,  0.0,  1.0, left, d);
+	gy +=  1.0 * lookup(p,  1.0,  1.0, left, d);
 
 	// hack: use g^2 to conceal noise in the video
 	float g = gx*gx + gy*gy;
 	//float g2 = g * (sin(iGlobalTime) / 2.0 + 0.5);
 
-	g *= max(0., sin(iGlobalTime));
+	g *= max(0., sin(iGlobalTime / 8.0));
 
 	vec4 col = g * vec4(1.,1.,1.,1.);
 

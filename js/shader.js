@@ -9,7 +9,7 @@ function Camera(){
 		;
 
 	var useOverlay = true;
-	var useHighlight = true;
+	var useHighlight = false;
 
 	var gl = _el.getContext("experimental-webgl");
 	gl.viewportWidth = _el.width;
