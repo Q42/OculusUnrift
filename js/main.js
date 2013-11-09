@@ -92,7 +92,8 @@ $(function(){
 			{ id: 'startup', src: 'sounds/macstartup.mp3' },
       { id: 'checklist', src: 'sounds/online.mp3' },
       { id: 'affirmative', src: 'sounds/affirmative.mp3' },
-			{ id: 'bips', src: 'sounds/bipone.mp3' }
+			{ id: 'bips', src: 'sounds/bipone.mp3' },
+      { id: 'explosion', src: 'sounds/explosion-02.mp3' }
 		];
 		createjs.Sound.addEventListener('fileload', handleLoad);
 		createjs.Sound.registerManifest(manifest);
