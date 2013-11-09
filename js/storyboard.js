@@ -5,6 +5,7 @@ var storyboard = [
   ,sceneCursor
   ,sceneMumboJumbo
   ,sceneSound
+  ,sceneFace
   ,sceneCrash
   ,sceneDashboard
 ];
