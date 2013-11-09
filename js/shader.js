@@ -1,4 +1,3 @@
-
 function Camera(){
 	var _el = document.getElementById('cam')
 		, inited = false
@@ -11,6 +10,7 @@ function Camera(){
 	var useOverlay = true;
 	var useHighlight = false;
 	var demoMode = true;
+	var scene = 1;
 
 	var gl = _el.getContext("experimental-webgl");
 	gl.viewportWidth = _el.width;
@@ -88,12 +88,16 @@ function Camera(){
 	this.toggleDemoMode = function() {
 		demoMode = !demoMode;
 	};
+	this.setScene = function(n) {
+		scene = n;
+	};
 
 	this.draw = function(){
 		if(!inited) return;
 		gl.clear(gl.COLOR_BUFFER_BIT);
 		gl.useProgram(shader);
 
+		gl.uniform1i(gl.getUniformLocation(shader, 'scene'), scene);
 		gl.uniform1i(gl.getUniformLocation(shader, 'demoMode'), demoMode);
 		gl.uniform1i(gl.getUniformLocation(shader, 'useOverlay'), useOverlay);
 		gl.uniform1i(gl.getUniformLocation(shader, 'useHighlight'), useHighlight);
