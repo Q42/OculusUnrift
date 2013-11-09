@@ -7,6 +7,7 @@ var Cursor = function (x,y,fontSizeInPixels, widthInChars, heightInLines, charDe
   self.currentIndex = 0;
   self.charDelay = charDelay || 50;
   self.text = "";
+  self._pause = false;
 
   function _outputText(text) {
     // Clear the canvas
@@ -25,7 +26,7 @@ var Cursor = function (x,y,fontSizeInPixels, widthInChars, heightInLines, charDe
   }
 
   self.drawNextChar = function () {
-    if (self.currentIndex >= self.text.length) return;
+    if (self._pause || self.currentIndex >= self.text.length) return;
 
     self.currentIndex ++;
     var curText = self.text.substr(0, self.currentIndex);
@@ -50,6 +51,17 @@ var Cursor = function (x,y,fontSizeInPixels, widthInChars, heightInLines, charDe
     self.text = text;
     self.currentIndex =0;
     self.drawNextChar();
-  }
+  };
+
+  self.pause = function () {
+    self._pause = true;
+  };
+
+  self.unpause = function () {
+    if (!self._pause) return;
+    self._pause = false;
+    self.drawNextChar();
+  };
+
 };
 

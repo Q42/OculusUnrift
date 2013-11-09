@@ -9,6 +9,7 @@ uniform bool useOverlay; //which scene
 uniform bool useHighlight; //body outline
 uniform bool demoMode; //also displace overlay
 uniform int scene; //for scene selector
+uniform float explIntensity; //for lightning effect
 
 //for tv stuff
 uniform float iGlobalTime;
@@ -123,6 +124,10 @@ vec4 scene1(vec4 col) {
 	col.b*=.1;
 	return col;
 }
+vec4 explosion(vec4 col) {
+	col*=1.+(explIntensity/60.)*10.;
+	return col;
+}
 
 
 void main() {
@@ -152,6 +157,8 @@ void main() {
 
 		//scene specific colour filters
 		if(scene==1||scene==2) col = scene1(col);
+			
+		if(explIntensity > 0.) col = explosion(col);
 
 		//add the overlay
 		vec2 tco = otc;

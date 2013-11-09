@@ -91,6 +91,10 @@ function Camera(){
 	this.setScene = function(n) {
 		scene = n;
 	};
+	var explIntensity = 0;
+	this.explode = function(){
+		explIntensity = 30;
+	};
 
 	this.draw = function(){
 		if(!inited) return;
@@ -102,6 +106,10 @@ function Camera(){
 		gl.uniform1i(gl.getUniformLocation(shader, 'useOverlay'), useOverlay);
 		gl.uniform1i(gl.getUniformLocation(shader, 'useHighlight'), useHighlight);
 		gl.uniform1f(gl.getUniformLocation(shader, 'iGlobalTime'), (start-Date.now())/10);
+		if(explIntensity-->0) {
+			console.log(explIntensity);
+			gl.uniform1f(gl.getUniformLocation(shader, 'explIntensity'), explIntensity);
+		}
 
 		drawTexture(0,'overlay',overlay,_overlay);
 
