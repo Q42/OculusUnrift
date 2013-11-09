@@ -15,32 +15,26 @@ var sceneSound = function(callback) {
 
 	initFrequency();
 
-  var finalCommands = {
+
+  var voiceCommands = {
     'next': function () {
       nextScene();
     },
-    picture: function () {
+    'picture': function () {
       console.log('pic!');
       hud.drawImage(streams[0].video, 0, 0, canvas.width, canvas.height);
       picture = new Image();
       picture.setAttribute('src', canvas.toDataURL('image/png'));
       pictureSize = 2;
-    }
-  };
-
-  var interimCommands = {
+    },
     "": function(text) {
       interimSpeech = text;
       draw();
     }
   };
 
-  $.each(finalCommands, function (k,v) {
-    speech.addFinalEvent(k,v);
-  });
-
-  $.each(interimCommands, function (k,v) {
-    speech.addInterimEvent(k,v);
+  $.each(voiceCommands, function (k,v) {
+    speech.addEvent(k,v);
   });
 
 
@@ -93,11 +87,8 @@ var sceneSound = function(callback) {
 	function nextScene() {
 		if (!running) return;
 		running = false;
-    $.each(finalCommands, function (k) {
-      speech.removeFinalEvent(k);
-    });
-    $.each(interimCommands, function (k) {
-      speech.removeFinalEvent(k);
+    $.each(voiceCommands, function (k) {
+      speech.removeEvent(k);
     });
 		callback();
 	}

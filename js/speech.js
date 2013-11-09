@@ -14,6 +14,7 @@ var speech = new (function () {
         console.log('final', i + ":" + finalSpeech);
         $.each(_finalEvents, function (k, v) {
           if (finalSpeech.indexOf(k) !== -1) {
+            recognized = true;
             v(finalSpeech);
           }
         });
@@ -22,14 +23,14 @@ var speech = new (function () {
         console.log('interim',i + ":" + interimSpeech);
         $.each(_interimEvents, function (k, v) {
           if (interimSpeech.indexOf(k) !== -1) {
+            recognized = true;
             v(interimSpeech);
           }
         });
       }
     }
     if (recognized) {
-      _recognition.stop();
-      _recognition.start();
+      _recognition.abort();
     }
   }
 
@@ -50,13 +51,23 @@ var speech = new (function () {
     _recognition.onend = function () {
       interimSpeech = 'Speech recognition ended';
       console.log(interimSpeech);
-      setTimeout(init, 3000);
+      _recognition.start();
     };
 
     _recognition.onresult = onSpeechResult;
 
     _recognition.start();
   }
+
+  this.addEvent  = function (word, callback) {
+    _finalEvents[word] = callback;
+    _interimEvents[word] = callback;
+  };
+
+  this.removeEvent = function (word) {
+    delete _finalEvents[word];
+    delete _interimEvents[word];
+  };
 
   this.addFinalEvent = function (word, callback) {
     _finalEvents[word] = callback;

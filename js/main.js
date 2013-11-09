@@ -48,19 +48,19 @@ $(function(){
     'lights off': function () {
       Lights.send('PUT', '/groups/0/action', { on: false });
     },
-    start: function () {
+    'start': function () {
       director.start();
     },
-    begin: function () {
+    'begin': function () {
       director.start();
     },
-    initialize: function () {
+    'initialize': function () {
       director.start();
     }
 
   };
 
-  $.each(voiceCommands, function (k,v) { speech.addInterimEvent(k,v); });
+  $.each(voiceCommands, function (k,v) { speech.addEvent(k,v); });
 
 
 
