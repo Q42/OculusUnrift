@@ -92,13 +92,11 @@ var sceneFace = function(callback) {
 	}, false);
 
 	var voiceCommands = {
-    'next': function () {
-      nextScene();
-    },
     'terminat': function () {
       explStart = new Date();
       createjs.Sound.play('sounds/explosion-02.mp3');
       camera.explode();
+      setTimeout(nextScene, 3000);
     }
   };
 
