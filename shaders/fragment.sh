@@ -135,9 +135,11 @@ void main() {
 		vec2 displace = left ? vec2(tc.x+0.25,tc.y) : vec2(tc.x-0.25,tc.y);
 
 		//posprocessing (color) filters
-		if(useOverlay) col = tv(displace,left);
-		if(useHighlight) col += highlight(displace * res, left);
-		if(!useOverlay && !useHighlight) {
+		if(useOverlay) {
+			col = tv(displace,left);
+			if(useHighlight) col += highlight(displace * res, left);
+		}
+		else {
 			if(left) col = texture2D(tex1,displace);
 			else col = texture2D(tex2,displace);
 		}
