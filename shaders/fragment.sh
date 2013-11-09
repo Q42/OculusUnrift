@@ -99,8 +99,7 @@ void main() {
 	vec2 tc = HmdWarp(otc, ScreenCenter);
 
 	//todo - better area clamping
-	if (!(any(bvec2(clamp(tc,ScreenCenter-vec2(0.25,0.5), ScreenCenter+vec2(0.25,0.5)) - tc))))
-	{
+	if (!(any(bvec2(clamp(tc,ScreenCenter-vec2(0.25,0.5), ScreenCenter+vec2(0.25,0.5)) - tc)))) {
 		vec2 displace = left ? vec2(tc.x+0.25,tc.y) : vec2(tc.x-0.25,tc.y);
 
 		//posprocessing (color) filters
@@ -114,9 +113,9 @@ void main() {
 		vec2 tco = HmdWarp(otc, OverlayCenter);
 		vec2 displaceo = left ? vec2(tco.x+0.25,tco.y) : vec2(tco.x-0.25,tco.y);
 		vec4 ol = texture2D(overlay,displaceo);
-		col=ol+col*(1.-ol.a);
 
-		gl_FragColor = col;
+		gl_FragColor = ol*ol.a + col*(1.-ol.a);
+
 	}
 	// black out clamp
 	else gl_FragColor = vec4(0.,0.,0.,0.);

@@ -32,7 +32,6 @@ html {
 	position: absolute;
 	left: 50%; top: 50%;
 	margin: -320px 0 0 -512px;
-	outline: 1px solid #f00;
 }
 video {
 	display: none;
