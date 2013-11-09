@@ -1,4 +1,4 @@
-var sceneSound = function(callback) {
+var sceneChildhood = function(callback) {
 	hud.clearRect(0, 0, canvas.width, canvas.height);
 
 	hud.fillStyle = '#ffffff';
@@ -15,18 +15,10 @@ var sceneSound = function(callback) {
 
 	initFrequency();
 
-
   var voiceCommands = {
-    'next': function () {
-      nextScene();
-    },
-    'picture': function () {
-    createjs.Sound.play('sounds/picture.mp3');
-      console.log('pic!');
-      hud.drawImage(streams[0].video, 0, 0, canvas.width, canvas.height);
-      picture = new Image();
-      picture.setAttribute('src', canvas.toDataURL('image/png'));
-      pictureSize = 2;
+    'destroy': function () {
+      console.log('BANANA');
+      setTimeout(function () { nextScene(); }, 7000);
     }
   };
 
@@ -38,7 +30,6 @@ var sceneSound = function(callback) {
     interimSpeech = text;
     draw();
   });
-
 
   function initFrequency() {
 		navigator.webkitGetUserMedia({audio:true}, function(stream) {

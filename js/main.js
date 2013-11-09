@@ -75,7 +75,8 @@ $(function(){
 			{ id: 'boot', src: 'sounds/robotpoweron.mp3' },
 			{ id: 'blip', src: 'sounds/blip.mp3' },
 			{ id: 'startup', src: 'sounds/macstartup.mp3' },
-			{ id: 'bips', src: 'sounds/keybip-2.mp3' }
+      { id: 'checklist', src: 'sounds/checklist.mp3' },
+			{ id: 'bips', src: 'sounds/bipone.mp3' }
 		];
 		createjs.Sound.addEventListener('fileload', handleLoad);
 		createjs.Sound.registerManifest(manifest);
