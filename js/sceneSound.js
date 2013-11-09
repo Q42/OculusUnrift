@@ -72,9 +72,9 @@ var sceneSound = function(callback) {
 		} else {
 			// Frequency
 			analyser.getByteFrequencyData(freqByteData);
-			hud.fillStyle = 'rgba(255, 255, 255, .8)';
+			hud.fillStyle = 'rgba(255, 255, 255, .3)';
 			for (var i = 0; i < freqByteData.length; i++) {
-				hud.fillRect(300 + 8*i, canvas.height/2 + 100, 1, -1 * freqByteData[i]);
+				hud.fillRect(300 + 8*i, canvas.height/2 + 100, 4, -1 * freqByteData[i]);
 				//hud.fillRect(350 + 8*i, canvas.height / 2  + 100 - freqByteData[i], 4, 4);
 			}
 
