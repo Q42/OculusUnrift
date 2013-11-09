@@ -17,6 +17,9 @@ $(function(){
 	center_x = canvas.width/2;
 	center_y = canvas.height/2;
 
+	end_x = 0;
+	end_y = 0;
+
 	hud.fillStyle = '#000';
 	hud.fillRect(0, 0, canvas.width, canvas.height);
 

@@ -12,7 +12,7 @@ var sceneMumboJumbo = function(callback){
 	//console.log("PLLAY");
 
 	function setText(txt){
-		hud.font = '16pt "visitor_tt1_brkregular" normal';
+		hud.font = '12pt "visitor_tt1_brkregular" normal';
 		hud.fillStyle = '#ffffff';
 		hud.textAlign = 'center';
 		hud.fillText(txt, center_x, center_y-8);
