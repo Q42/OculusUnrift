@@ -32,7 +32,5 @@ var sceneCrash = function(callback) {
     y += 16;
   }
 
-  //createjs.Sound.play('sounds/robotpoweron.mp3');
-
   setTimeout(callback, 50000);
 }

@@ -5,6 +5,9 @@ function getURLParameter(name) {
 }
 
 $(function(){
+
+  speech.start();
+
 	canvas = document.getElementById("hud-overlay");
 	hud = canvas.getContext("2d");
 
@@ -38,7 +41,30 @@ $(function(){
 		camera.toggleOverlay();
 	});
 
-	var scene = getURLParameter('scene');
+  var voiceCommands = {
+     'lights on': function () {
+      Lights.send('PUT', '/groups/0/action', { on: true });
+    },
+    'lights off': function () {
+      Lights.send('PUT', '/groups/0/action', { on: false });
+    },
+    start: function () {
+      director.start();
+    },
+    begin: function () {
+      director.start();
+    },
+    initialize: function () {
+      director.start();
+    }
+
+  };
+
+  $.each(voiceCommands, function (k,v) { speech.addInterimEvent(k,v); });
+
+
+
+  var scene = getURLParameter('scene');
 	if (scene !== null) {
 		director.setScene(scene);
 		director.start();
@@ -58,34 +84,5 @@ $(function(){
 		}
 	}
 
-	function initFrequency() {
-		navigator.webkitGetUserMedia({audio:true}, function(stream) {
-			var audioContext = new webkitAudioContext();
-			analyser = audioContext.createAnalyser();
-			analyser.fftSize = 512;
-			var mediaStreamSource = audioContext.createMediaStreamSource(stream);
-			mediaStreamSource.connect(analyser);
-			var freqByteData = new Uint8Array(analyser.frequencyBinCount / 4);
-
-			function draw() {
-				if (!window.showFrequency) {
-					requestAnimationFrame(draw);
-					return;
-				}
-				analyser.getByteFrequencyData(freqByteData);
-				hud.clearRect(0, 0, canvas.width, canvas.height);
-				hud.fillStyle = 'rgba(255, 255, 255, 0.1)';
-				for (var i = 0; i < freqByteData.length; i++) {
-					hud.fillRect(300 + 8*i, canvas.height/2 + 100, 10, -1 * freqByteData[i]);
-					//hud.fillRect(350 + 8*i, canvas.height / 2  + 100 - freqByteData[i], 4, 4);
-				}
-				requestAnimationFrame(draw);
-			}
-			requestAnimationFrame(draw);
-		});
-	}
-
 	preloadSound();
-	initFrequency();
-
 });
