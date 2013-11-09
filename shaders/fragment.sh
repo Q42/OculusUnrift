@@ -7,6 +7,7 @@ uniform sampler2D tex1; //left
 uniform sampler2D tex2; //right
 uniform bool useOverlay; //which scene
 uniform bool useHighlight; //body outline
+uniform bool demoMode; //also displace overlay
 
 //for tv stuff
 uniform float iGlobalTime;
@@ -90,6 +91,7 @@ float lookup(vec2 p, float dx, float dy, bool left, float d)
 vec4 highlight(vec2 p, bool left) {
 
 	float d = sin(iGlobalTime / 6.0)*1. + 1.5; // kernel offset
+	d *= .4;
 
 	// simple sobel edge detection
 	float gx = 0.0;
@@ -146,9 +148,9 @@ void main() {
 		}
 
 		//add the overlay
-		vec2 tco = HmdWarp(otc, OverlayCenter);
-		//vec2 displaceo = left ? vec2(tco.x+0.21,tco.y) : vec2(tco.x-0.21,tco.y);
-		vec2 displaceo = left ? vec2(otc.x+0.21,otc.y) : vec2(otc.x-0.21,otc.y);
+		vec2 tco = otc;
+		if(demoMode) tco = HmdWarp(otc, OverlayCenter);
+		vec2 displaceo = left ? vec2(tco.x+0.25,tco.y) : vec2(tco.x-0.25,tco.y);
 		vec4 ol = texture2D(overlay, displaceo);
 
 		gl_FragColor = ol*ol.a + col*(1.-ol.a);
