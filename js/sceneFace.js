@@ -12,7 +12,10 @@ var sceneFace = function(callback) {
   var explImg = new Image();
   explImg.src = 'img/explosionsprite2.png';
 
+  var running = true;
+
 	function trackSpot(){
+    if (!running) return;
 		var this_x = curr_pos[0]<end_x ? curr_pos[0]+step : curr_pos[0]-step;
 		var this_y = curr_pos[1]<end_y ? curr_pos[1]+step : curr_pos[1]-step;
 		if(this_x>end_x-step-4 && this_x<end_x+step+4) this_x = end_x;
@@ -105,6 +108,7 @@ var sceneFace = function(callback) {
   });
 
   function nextScene() {
+    running = false;
     htracker.stop();
     $.each(voiceCommands, function (k) {
       speech.removeEvent(k);
