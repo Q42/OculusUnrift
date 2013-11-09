@@ -49,15 +49,15 @@ float hash(in vec2 v) { return fract(sin(v[1])*43758.5453123); }
 
 //tv effect
 vec3 tvLeft(vec2 uv, float xOffset) {
-  float red   =   texture2D(  tex1,  vec2(uv.x + xOffset -0.01,uv.y)).r;
+  float red   =   texture2D(  tex1,  vec2(uv.x + xOffset -0.005,uv.y)).r;
   float green =   texture2D(  tex1,  vec2(uv.x + xOffset,    uv.y)).g;
-  float blue  = texture2D(  tex1,  vec2(uv.x + xOffset +0.01,uv.y)).b;
+  float blue  = texture2D(  tex1,  vec2(uv.x + xOffset +0.005,uv.y)).b;
   return vec3(red,green,blue);
 }
 vec3 tvRight(vec2 uv, float xOffset) {
-  float red   =   texture2D(  tex2,  vec2(uv.x + xOffset -0.01,uv.y)).r;
+  float red   =   texture2D(  tex2,  vec2(uv.x + xOffset -0.005,uv.y)).r;
   float green =   texture2D(  tex2,  vec2(uv.x + xOffset,    uv.y)).g;
-  float blue  = texture2D(  tex2,  vec2(uv.x + xOffset +0.01,uv.y)).b;
+  float blue  = texture2D(  tex2,  vec2(uv.x + xOffset +0.005,uv.y)).b;
   return vec3(red,green,blue);
 }
 vec4 tv(vec2 uv, bool left) {
@@ -72,17 +72,13 @@ vec4 tv(vec2 uv, bool left) {
   if(left) color = tvLeft(uv,xOffset);
 	else color = tvRight(uv,xOffset);
 
-  float scanline = -0.2+sin((uv.y+iGlobalTime/100.)*800.0)*0.1;
+  float scanline = -0.2+sin((uv.y+iGlobalTime/100.)*1000.0)*0.1;
   color -= scanline;
   color += vec3 (-0.4, -.2, -.2);
-  color *= vec3 (1.2, 0.3, 0.3);
+  color *= vec3 (1.5, .6, .6);
 
   return vec4(color,1.0);
 }
-
-
-
-
 
 void main() {
 	bool left = (gl_FragCoord.x < res.x/2.0);
