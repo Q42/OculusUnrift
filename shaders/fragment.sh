@@ -146,8 +146,9 @@ void main() {
 
 		//add the overlay
 		vec2 tco = HmdWarp(otc, OverlayCenter);
-		vec2 displaceo = left ? vec2(tco.x+0.25,tco.y) : vec2(tco.x-0.25,tco.y);
-		vec4 ol = texture2D(overlay,displaceo);
+		//vec2 displaceo = left ? vec2(tco.x+0.21,tco.y) : vec2(tco.x-0.21,tco.y);
+		vec2 displaceo = left ? vec2(otc.x+0.21,otc.y) : vec2(otc.x-0.21,otc.y);
+		vec4 ol = texture2D(overlay, displaceo);
 
 		gl_FragColor = ol*ol.a + col*(1.-ol.a);
 
