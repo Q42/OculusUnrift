@@ -5,6 +5,7 @@ var speech = new (function () {
   var _interimEvents = {};
 
   var _recognizeEventTimeout = null;
+  var _streamListener = null;
 
 
   function onSpeechResult(event) {
@@ -12,25 +13,18 @@ var speech = new (function () {
     var recognized = false;
     for (var i = event.resultIndex; i < event.results.length; ++i) {
       if (_recognizeEventTimeout)  clearTimeout(_recognizeEventTimeout);
-      if (event.results[i].isFinal) {
-        finalSpeech = event.results[i][0].transcript;
-        console.log('final', i + ":" + finalSpeech);
-        $.each(_finalEvents, function (k, v) {
-          if (finalSpeech.indexOf(k) !== -1) {
-            recognized = true;
-            v(finalSpeech);
-          }
-        });
-      } else {
-        interimSpeech = event.results[i][0].transcript;
-        console.log('interim',i + ":" + interimSpeech);
-        $.each(_interimEvents, function (k, v) {
-          if (interimSpeech.indexOf(k) !== -1) {
-            recognized = true;
-            v(interimSpeech);
-          }
-        });
-      }
+      var isFinal = event.results[i].isFinal;
+      var text = event.results[i][0].transcript;
+      console.log(isFinal ? 'final' : 'interim', i + ":" + text);
+      var events = isFinal ? _finalEvents : _interimEvents;
+      if (_streamListener) _streamListener(text);
+      $.each(events, function (k, v) {
+        if (text.indexOf(k) !== -1) {
+          recognized = true;
+          v(interimSpeech);
+        }
+      });
+
     }
     if (recognized) {
       _recognition.abort();
@@ -73,6 +67,10 @@ var speech = new (function () {
     delete _finalEvents[word];
     delete _interimEvents[word];
   };
+
+  this.setStreamListener = function(callback) {
+    _streamListener = callback;
+  }
 
   this.addFinalEvent = function (word, callback) {
     _finalEvents[word] = callback;

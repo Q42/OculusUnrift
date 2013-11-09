@@ -26,15 +26,16 @@ var sceneSound = function(callback) {
       picture = new Image();
       picture.setAttribute('src', canvas.toDataURL('image/png'));
       pictureSize = 2;
-    },
-    "": function(text) {
-      interimSpeech = text;
-      draw();
     }
   };
 
   $.each(voiceCommands, function (k,v) {
     speech.addEvent(k,v);
+  });
+
+  speech.setStreamListener(function(text) {
+    interimSpeech = text;
+    draw();
   });
 
 
@@ -87,9 +88,11 @@ var sceneSound = function(callback) {
 	function nextScene() {
 		if (!running) return;
 		running = false;
+    speech.setStreamListener(null);
     $.each(voiceCommands, function (k) {
       speech.removeEvent(k);
     });
+
 		callback();
 	}
 };
