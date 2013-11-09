@@ -8,6 +8,7 @@ uniform sampler2D tex2; //right
 uniform bool useOverlay; //which scene
 uniform bool useHighlight; //body outline
 uniform bool demoMode; //also displace overlay
+uniform int scene; //for scene selector
 
 //for tv stuff
 uniform float iGlobalTime;
@@ -80,8 +81,7 @@ vec4 getTexLeft(vec2 uv) {
 vec4 getTexRight(vec2 uv) {
 	return texture2D(tex2, uv);
 }
-float lookup(vec2 p, float dx, float dy, bool left, float d)
-{
+float lookup(vec2 p, float dx, float dy, bool left, float d) {
 	vec2 uv = (p.xy + vec2(dx * d, dy * d)) / res;
 	vec4 c = left ? getTexLeft(uv) : getTexRight(uv);
 
@@ -121,6 +121,15 @@ vec4 highlight(vec2 p, bool left) {
 	return col;
 }
 
+//scene specific colour functions
+vec4 scene1(vec4 col) {
+	col.r-=.5;
+	col.r*=1.5;
+	col.g*=.2;
+	col.b*=.1;
+	return col;
+}
+
 
 void main() {
 	bool left = (gl_FragCoord.x < res.x/2.0);
@@ -146,6 +155,9 @@ void main() {
 			if(left) col = texture2D(tex1,displace);
 			else col = texture2D(tex2,displace);
 		}
+
+		//scene specific colour filters
+		if(scene==1||scene==2) col = scene1(col);
 
 		//add the overlay
 		vec2 tco = otc;
