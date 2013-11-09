@@ -98,6 +98,7 @@ var sceneFace = function(callback) {
     'terminat': function () {
       explStart = new Date();
       createjs.Sound.play('sounds/explosion-02.mp3');
+      camera.explode();
     }
   };
 
