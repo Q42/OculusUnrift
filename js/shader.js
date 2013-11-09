@@ -10,6 +10,7 @@ function Camera(){
 
 	var useOverlay = true;
 	var useHighlight = false;
+	var demoMode = true;
 
 	var gl = _el.getContext("experimental-webgl");
 	gl.viewportWidth = _el.width;
@@ -84,12 +85,16 @@ function Camera(){
 	this.toggleHighlight = function() {
 		useHighlight = !useHighlight;
 	};
+	this.toggleDemoMode = function() {
+		demoMode = !demoMode;
+	};
 
 	this.draw = function(){
 		if(!inited) return;
 		gl.clear(gl.COLOR_BUFFER_BIT);
 		gl.useProgram(shader);
 
+		gl.uniform1i(gl.getUniformLocation(shader, 'demoMode'), demoMode);
 		gl.uniform1i(gl.getUniformLocation(shader, 'useOverlay'), useOverlay);
 		gl.uniform1i(gl.getUniformLocation(shader, 'useHighlight'), useHighlight);
 		gl.uniform1f(gl.getUniformLocation(shader, 'iGlobalTime'), (start-Date.now())/10);
