@@ -1,4 +1,4 @@
-var sceneSound = function(callback) {
+var sceneChildhood = function(callback) {
 	hud.clearRect(0, 0, canvas.width, canvas.height);
 
 	hud.fillStyle = '#ffffff';
@@ -15,18 +15,10 @@ var sceneSound = function(callback) {
 
 	initFrequency();
 
-
   var voiceCommands = {
-    'find': function () {
-      nextScene();
-    },
-    'picture': function () {
-    createjs.Sound.play('sounds/picture.mp3');
-      console.log('pic!');
-      hud.drawImage(streams[0].video, 0, 0, canvas.width, canvas.height);
-      picture = new Image();
-      picture.setAttribute('src', canvas.toDataURL('image/png'));
-      pictureSize = 2;
+    'destroy': function () {
+      console.log('BANANA');
+      setTimeout(function () { nextScene(); }, 7000);
     }
   };
 
@@ -38,7 +30,6 @@ var sceneSound = function(callback) {
     interimSpeech = text;
     draw();
   });
-
 
   function initFrequency() {
 		navigator.webkitGetUserMedia({audio:true}, function(stream) {
@@ -72,7 +63,7 @@ var sceneSound = function(callback) {
 		} else {
 			// Frequency
 			analyser.getByteFrequencyData(freqByteData);
-			hud.fillStyle = 'rgba(255, 255, 255, .8)';
+			hud.fillStyle = 'rgba(255, 255, 255, 0.1)';
 			for (var i = 0; i < freqByteData.length; i++) {
 				hud.fillRect(300 + 8*i, canvas.height/2 + 100, 1, -1 * freqByteData[i]);
 				//hud.fillRect(350 + 8*i, canvas.height / 2  + 100 - freqByteData[i], 4, 4);

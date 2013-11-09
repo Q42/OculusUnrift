@@ -8,9 +8,11 @@ var sceneMumboJumbo = function(callback){
 	var texts = ['initializing boot sequence...', 'deleting all files...', 're-allocating memory...'];
 	var blurp = '';
 	var flicker = 0;
+	//createjs.Sound.play('sounds/checklist.mp3');
+	//console.log("PLLAY");
 
 	function setText(txt){
-		hud.font = '16pt "visitor_tt1_brkregular" normal';
+		hud.font = '12pt "visitor_tt1_brkregular" normal';
 		hud.fillStyle = '#ffffff';
 		hud.textAlign = 'center';
 		hud.fillText(txt, center_x, center_y-8);
@@ -37,8 +39,9 @@ var sceneMumboJumbo = function(callback){
 		    hud.fillStyle = 'rgba(100,0,0,'+flicker+')';
 			hud.fillRect(0, 0, canvas.width, canvas.height);
 
-		    blurp += texts[text_index].charAt(char_index);
-		    createjs.Sound.play('sounds/keybip-2.mp3');
+				character = texts[text_index].charAt(char_index)
+		    blurp += character;
+		    if (character != ' ') createjs.Sound.play('sounds/bipone.mp3', {volume:0.5});
 
 			char_index += 1;
 
@@ -52,7 +55,10 @@ var sceneMumboJumbo = function(callback){
 					setTimeout(draw,2500);
 				}
 				else {
-					setTimeout(callback, 2500);
+					setTimeout(function() {
+						createjs.Sound.play('sounds/online.mp3');
+						callback();
+					}, 2500);
 				}
 				
 			}else{

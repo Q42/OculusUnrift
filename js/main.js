@@ -17,6 +17,9 @@ $(function(){
 	center_x = canvas.width/2;
 	center_y = canvas.height/2;
 
+	end_x = 0;
+	end_y = 0;
+
 	hud.fillStyle = '#000';
 	hud.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -41,16 +44,22 @@ $(function(){
 		camera.toggleOverlay();
 	});
 
+	Mousetrap.bind('z', function() {
+		camera.toggleDemoMode();
+	});
+
   Mousetrap.bind('h', function() {
     camera.toggleHighlight();
   });
 
 
   var voiceCommands = {
-     'lights on': function () {
+     'light': function () {
+      createjs.Sound.play('sounds/affirmative.mp3');
       Lights.send('PUT', '/groups/0/action', { on: true });
     },
     'lights off': function () {
+      createjs.Sound.play('sounds/affirmative.mp3');
       Lights.send('PUT', '/groups/0/action', { on: false });
     },
     'start': function () {
@@ -79,8 +88,11 @@ $(function(){
 		var manifest = [
 			{ id: 'boot', src: 'sounds/robotpoweron.mp3' },
 			{ id: 'blip', src: 'sounds/blip.mp3' },
+      { id: 'picture', src: 'sounds/picture.mp3' },
 			{ id: 'startup', src: 'sounds/macstartup.mp3' },
-			{ id: 'bips', src: 'sounds/keybip-2.mp3' }
+      { id: 'checklist', src: 'sounds/online.mp3' },
+      { id: 'affirmative', src: 'sounds/affirmative.mp3' },
+			{ id: 'bips', src: 'sounds/bipone.mp3' }
 		];
 		createjs.Sound.addEventListener('fileload', handleLoad);
 		createjs.Sound.registerManifest(manifest);

@@ -8,5 +8,5 @@ var sceneBoot = function(callback) {
 	hud.textAlign = 'center';
   hud.fillText('Unrift', center_x, center_y);
 
-  createjs.Sound.play('sounds/macstartup.mp3').addEventListener("complete", callback);
+  createjs.Sound.play('sounds/macstartup.mp3', {volume:0.5}).addEventListener("complete", callback);
 };
