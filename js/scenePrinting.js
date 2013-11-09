@@ -47,7 +47,7 @@ var scenePrinting = function(callback) {
 						picture = new Image();
 						picture.setAttribute('src', canvas.toDataURL('image/png'));
 						pictureSize = 2;
-					} else if (finalSpeech == 'next') {
+					} else if (finalSpeech.trim() == 'next') {
 						nextScene();
 					}
 				} else {
