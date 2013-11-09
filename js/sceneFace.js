@@ -8,6 +8,10 @@ var sceneFace = function(callback) {
 	var end_r = 25;
 	var step = 25;
 
+  var explStart;
+  var explImg = new Image();
+  explImg.src = 'img/explosionsprite2.png';
+
 	function trackSpot(){
 		var this_x = curr_pos[0]<end_x ? curr_pos[0]+step : curr_pos[0]-step;
 		var this_y = curr_pos[1]<end_y ? curr_pos[1]+step : curr_pos[1]-step;
@@ -15,11 +19,23 @@ var sceneFace = function(callback) {
 		if(this_y>end_y-step-4 && this_y<end_y+step+4) this_y = end_y;
 		
 		drawLines(this_x,this_y,end_r);
+    drawExplosion();
 		requestAnimationFrame(trackSpot);
 	}
 
+  function drawExplosion() {
+    if (explStart != null) {
+      var now = new Date();
+      var frame = Math.floor((now - explStart) / 50);
+      //console.log(frame);
+      hud.drawImage(explImg, 96 * frame , 0, 96, 96, curr_pos[0] - 48, curr_pos[1] - 48, 96, 96);
+      if (frame >= 12) {
+        explStart = null;
+      }
+    }
+  }
+
 	function drawLines(ex,ey,er){
-		console.log('drawing');
 		hud.clearRect(0, 0, canvas.width, canvas.height);
 
 		hud.shadowColor = "rgba(255,255,255,0.5)";
@@ -75,8 +91,25 @@ var sceneFace = function(callback) {
 		//console.log(event.z);
 	}, false);
 
-	/*setTimeout(function() {
-		htracker.stop();
-		callback();
-	}, 10000);*/
+	var voiceCommands = {
+    'next': function () {
+      nextScene();
+    },
+    'terminat': function () {
+      explStart = new Date();
+    }
+  };
+
+  $.each(voiceCommands, function (k,v) {
+    speech.addEvent(k,v);
+  });
+
+  function nextScene() {
+    htracker.stop();
+    $.each(voiceCommands, function (k) {
+      speech.removeEvent(k);
+    });
+
+    callback();
+  }
 };
