@@ -7,10 +7,11 @@ var speech = new (function () {
 
   function onSpeechResult(event) {
     //console.log(event);
+    var recognized = false;
     for (var i = event.resultIndex; i < event.results.length; ++i) {
       if (event.results[i].isFinal) {
         finalSpeech = event.results[i][0].transcript;
-        console.log('final', finalSpeech);
+        console.log('final', i + ":" + finalSpeech);
         $.each(_finalEvents, function (k, v) {
           if (finalSpeech.indexOf(k) !== -1) {
             v(finalSpeech);
@@ -18,13 +19,17 @@ var speech = new (function () {
         });
       } else {
         interimSpeech = event.results[i][0].transcript;
-        console.log('interim', interimSpeech);
+        console.log('interim',i + ":" + interimSpeech);
         $.each(_interimEvents, function (k, v) {
           if (interimSpeech.indexOf(k) !== -1) {
             v(interimSpeech);
           }
         });
       }
+    }
+    if (recognized) {
+      _recognition.stop();
+      _recognition.start();
     }
   }
 
@@ -56,14 +61,14 @@ var speech = new (function () {
   this.addFinalEvent = function (word, callback) {
     _finalEvents[word] = callback;
   };
-  this.delFinalEvent = function (word) {
+  this.removeFinalEvent = function (word) {
     delete _finalEvents[word];
   };
 
   this.addInterimEvent = function (word, callback) {
     _interimEvents[word] = callback;
   };
-  this.delInterimEvent = function (word) {
+  this.removeInterimEvent = function (word) {
     delete _interimEvents[word];
   };
 
