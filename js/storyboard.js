@@ -6,7 +6,6 @@ var storyboard = [
   ,sceneMumboJumbo
   ,sceneSound
   ,sceneFace
-  ,sceneDashboard
   ,sceneChildhood
   ,sceneCrash
 ];
