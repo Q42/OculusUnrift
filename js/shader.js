@@ -106,10 +106,8 @@ function Camera(){
 		gl.uniform1i(gl.getUniformLocation(shader, 'useOverlay'), useOverlay);
 		gl.uniform1i(gl.getUniformLocation(shader, 'useHighlight'), useHighlight);
 		gl.uniform1f(gl.getUniformLocation(shader, 'iGlobalTime'), (start-Date.now())/10);
-		if(explIntensity-->0) {
-			console.log(explIntensity);
+		if(explIntensity-->0)
 			gl.uniform1f(gl.getUniformLocation(shader, 'explIntensity'), explIntensity);
-		}
 
 		drawTexture(0,'overlay',overlay,_overlay);
 

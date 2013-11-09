@@ -21,10 +21,12 @@ var sceneChildhood = function(callback) {
     'child': function () {
       console.log('BANANA');
       bananapicture = new Image();
+      bananapicture.onload = function(){
+        hud.drawImage(bananapicture, canvas.width/4, canvas.height/4, canvas.width/2, canvas.height/2);
+	      setTimeout(nextScene, 7000);
+      };
       bananapicture.src = "img/banana.jpg";
       destroyingChildhood = true;
-      hud.drawImage(bananapicture, canvas.width/4, canvas.height/4, canvas.width/2, canvas.height/2);
-      setTimeout(function () { nextScene(); }, 7000);
     }
   };
 
