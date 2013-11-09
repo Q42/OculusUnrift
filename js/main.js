@@ -17,6 +17,9 @@ $(function(){
 	center_x = canvas.width/2;
 	center_y = canvas.height/2;
 
+	end_x = 0;
+	end_y = 0;
+
 	hud.fillStyle = '#000';
 	hud.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -85,6 +88,7 @@ $(function(){
 		var manifest = [
 			{ id: 'boot', src: 'sounds/robotpoweron.mp3' },
 			{ id: 'blip', src: 'sounds/blip.mp3' },
+      { id: 'picture', src: 'sounds/picture.mp3' },
 			{ id: 'startup', src: 'sounds/macstartup.mp3' },
       { id: 'checklist', src: 'sounds/online.mp3' },
       { id: 'affirmative', src: 'sounds/affirmative.mp3' },
