@@ -15,8 +15,7 @@ var sceneSound = function(callback) {
 
 	initFrequency();
 
-  cursor = new Cursor(center_x-200,center_y-300,6,50, 8, 20);
-
+  cursor = new Cursor(center_x-200,center_y-300,12,50, 8, 20);
 
   var lines = [
     "A long time ago, in a galaxy far, far away...",
