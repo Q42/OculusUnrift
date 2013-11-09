@@ -91,6 +91,8 @@ var sceneSound = function(callback) {
 		}
 
 		if (picture != null) {
+      cursor.pause();
+      hud.clearRect(0, 0, canvas.width, canvas.height);
 			hud.drawImage(picture, canvas.width, 0,
 				-canvas.width * Math.min(pictureSize, 1),
 				canvas.height * Math.min(pictureSize, 1));
@@ -99,8 +101,10 @@ var sceneSound = function(callback) {
 				picture = null;
 				interimSpeech = '';
 				finalSpeech = '';
+
 			}
 		} else {
+      cursor.unpause();
 			// Frequency
       hud.clearRect(0, canvas.height/2 + 100 - 256, canvas.width, 256);
 
