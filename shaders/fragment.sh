@@ -90,8 +90,7 @@ float lookup(vec2 p, float dx, float dy, bool left, float d) {
 }
 vec4 highlight(vec2 p, bool left) {
 
-	float d = sin(iGlobalTime / 6.0)*1. + 1.5; // kernel offset
-	d *= .4;
+	float d = .7*(sin(iGlobalTime / 40.)*1. + 1.5); // kernel offset
 
 	// simple sobel edge detection
 	float gx = 0.0;
@@ -112,13 +111,8 @@ vec4 highlight(vec2 p, bool left) {
 
 	// hack: use g^2 to conceal noise in the video
 	float g = gx*gx + gy*gy;
-	//float g2 = g * (sin(iGlobalTime) / 2.0 + 0.5);
 
-	g *= max(0., sin(iGlobalTime / 8.0));
-
-	vec4 col = g * vec4(1.,1.,1.,1.);
-
-	return col;
+	return g * vec4(1.,1.,1.,1.);
 }
 
 //scene specific colour functions
