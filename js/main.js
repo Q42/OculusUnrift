@@ -53,11 +53,14 @@ $(function(){
     },
     begin: function () {
       director.start();
+    },
+    initialize: function () {
+      director.start();
     }
 
   };
 
-  $.each(voiceCommands, function (k,v) { speech.addFinalEvent(k,v); });
+  $.each(voiceCommands, function (k,v) { speech.addInterimEvent(k,v); });
 
 
 
