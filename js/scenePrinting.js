@@ -11,6 +11,7 @@ var scenePrinting = function(callback) {
 	var freqByteData;
 	var shouldDraw = true;
 	var picture = null;
+	var pictureSize;
 
 	initSpeech();
 	initFrequency();
@@ -26,10 +27,13 @@ var scenePrinting = function(callback) {
 			console.log('Speech recognition started');
 		};
 		recognition.onerror = function(event) {
-			console.log('Speech recognition error', event)
+			interimSpeech = 'Speech recognition error';
+			console.log(interimSpeech, event);
 		};
 		recognition.onend = function() {
-			console.log('Speech recognition ended');
+			interimSpeech = 'Speech recognition ended';
+			console.log(interimSpeech);
+			setTimeout(nextScene, 3000);
 		};
 		recognition.onresult = function(event) {
 			//console.log(event);
@@ -42,11 +46,9 @@ var scenePrinting = function(callback) {
 						hud.drawImage(streams[0].video, 0, 0, canvas.width, canvas.height);
 						picture = new Image();
 						picture.setAttribute('src', canvas.toDataURL('image/png'));
-						setTimeout(function() {
-							picture = null;
-							interimSpeech = '';
-							finalSpeech = '';
-						}, 2000);
+						pictureSize = 2;
+					} else if (finalSpeech == 'next') {
+						nextScene();
 					}
 				} else {
 					interimSpeech = event.results[i][0].transcript;
@@ -77,13 +79,21 @@ var scenePrinting = function(callback) {
 		}
 
 		if (picture != null) {
-			hud.drawImage(picture, 0, 0, canvas.width, canvas.height);
+			hud.drawImage(picture, canvas.width, 0,
+				-canvas.width * Math.min(pictureSize, 1),
+				canvas.height * Math.min(pictureSize, 1));
+			pictureSize -= 0.02;
+			if (pictureSize <= 0) {
+				picture = null;
+				interimSpeech = '';
+				finalSpeech = '';
+			}
 		} else {
 			// Frequency
 			analyser.getByteFrequencyData(freqByteData);
 			hud.fillStyle = 'rgba(255, 255, 255, 0.1)';
 			for (var i = 0; i < freqByteData.length; i++) {
-				hud.fillRect(300 + 8*i, canvas.height/2 + 100, 10, -1 * freqByteData[i]);
+				hud.fillRect(300 + 8*i, canvas.height/2 + 100, 1, -1 * freqByteData[i]);
 				//hud.fillRect(350 + 8*i, canvas.height / 2  + 100 - freqByteData[i], 4, 4);
 			}
 
@@ -95,8 +105,8 @@ var scenePrinting = function(callback) {
 		requestAnimationFrame(draw);
 	}
 
-	setTimeout(function() {
+	function nextScene() {
 		shouldDraw = false;
 		callback();
-	}, 50000);
+	}
 };
