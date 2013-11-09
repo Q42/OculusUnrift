@@ -1,4 +1,3 @@
-//by marcel@q42.nl
 #ifdef GL_ES
 precision highp float;
 #endif
@@ -7,6 +6,7 @@ uniform sampler2D overlay; //canvas2d
 uniform sampler2D tex1; //left
 uniform sampler2D tex2; //right
 uniform bool useOverlay; //which scene
+uniform bool useHighlight; //body outline
 
 //for tv stuff
 uniform float iGlobalTime;
@@ -35,14 +35,6 @@ vec2 HmdWarp(vec2 in01, vec2 LensCenter) {
 			HmdWarpParam.z * rSq * rSq +
 			HmdWarpParam.w * rSq * rSq * rSq);
 	 return LensCenter + Scale * rvector;
-}
-//shader scene 1
-vec2 scene1dp(vec2 coo){
-	return coo;
-}
-vec4 scene1col(vec4 color) {
-	return color;
-	return color*vec4(1.,0.,0.5,1.);
 }
 
 float hash(in vec2 v) { return fract(sin(v[1])*43758.5453123); }
@@ -80,6 +72,53 @@ vec4 tv(vec2 uv, bool left) {
   return vec4(color,1.0);
 }
 
+//edge highlighting
+vec4 getTexLeft(vec2 uv) {
+	return texture2D(tex2, uv);
+}
+vec4 getTexRight(vec2 uv) {
+	return texture2D(tex2, uv);
+}
+float lookup(vec2 p, float dx, float dy, bool left)
+{
+	float d = sin(iGlobalTime * 5.0)*1.5 + 1.5; // kernel offset
+	vec2 uv = (p.xy + vec2(dx * d, dy * d)) / res;
+	vec4 c = left ? getTexLeft(uv) : getTexRight(uv);
+
+	// return as luma
+	return 0.2126*c.r + 0.7152*c.g + 0.0722*c.b;
+}
+vec4 highlight(vec2 p, bool left) {
+
+	// simple sobel edge detection
+	float gx = 0.0;
+	gx += -1.0 * lookup(p, -1.0, -1.0, left);
+	gx += -2.0 * lookup(p, -1.0,  0.0, left);
+	gx += -1.0 * lookup(p, -1.0,  1.0, left);
+	gx +=  1.0 * lookup(p,  1.0, -1.0, left);
+	gx +=  2.0 * lookup(p,  1.0,  0.0, left);
+	gx +=  1.0 * lookup(p,  1.0,  1.0, left);
+
+	float gy = 0.0;
+	gy += -1.0 * lookup(p, -1.0, -1.0, left);
+	gy += -2.0 * lookup(p,  0.0, -1.0, left);
+	gy += -1.0 * lookup(p,  1.0, -1.0, left);
+	gy +=  1.0 * lookup(p, -1.0,  1.0, left);
+	gy +=  2.0 * lookup(p,  0.0,  1.0, left);
+	gy +=  1.0 * lookup(p,  1.0,  1.0, left);
+
+	// hack: use g^2 to conceal noise in the video
+	float g = gx*gx + gy*gy;
+	//float g2 = g * (sin(iGlobalTime) / 2.0 + 0.5);
+
+	g *= max(0., sin(iGlobalTime));
+
+	vec4 col = g * vec4(1.,1.,1.,1.);
+
+	return col;
+}
+
+
 void main() {
 	bool left = (gl_FragCoord.x < res.x/2.0);
 	vec2 ScreenCenter = left ? LeftScreenCenter : RightScreenCenter;
@@ -87,9 +126,6 @@ void main() {
 	vec2 otc = gl_FragCoord.xy / res;
 
 	vec4 col;
-
-	//preprocessing displacement filters
-	otc = scene1dp(otc);
 
 	//warp that shit
 	vec2 tc = HmdWarp(otc, ScreenCenter);
@@ -100,7 +136,8 @@ void main() {
 
 		//posprocessing (color) filters
 		if(useOverlay) col = tv(displace,left);
-		else {
+		if(useHighlight) col += highlight(displace * res, left);
+		if(!useOverlay && !useHighlight) {
 			if(left) col = texture2D(tex1,displace);
 			else col = texture2D(tex2,displace);
 		}

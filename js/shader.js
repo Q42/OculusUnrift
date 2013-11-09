@@ -8,7 +8,8 @@ function Camera(){
 		, pos = null
 		;
 
-  var useOverlay = true;
+	var useOverlay = true;
+	var useHighlight = true;
 
 	var gl = _el.getContext("experimental-webgl");
 	gl.viewportWidth = _el.width;
@@ -77,9 +78,12 @@ function Camera(){
 
 	var start = Date.now();
 
-  this.toggleOverlay = function() {
-    useOverlay = !useOverlay;
-  };
+	this.toggleOverlay = function() {
+		useOverlay = !useOverlay;
+	};
+	this.toggleHighlight = function() {
+		useHighlight = !useHighlight;
+	};
 
 	this.draw = function(){
 		if(!inited) return;
@@ -87,6 +91,7 @@ function Camera(){
 		gl.useProgram(shader);
 
 		gl.uniform1i(gl.getUniformLocation(shader, 'useOverlay'), useOverlay);
+		gl.uniform1i(gl.getUniformLocation(shader, 'useHighlight'), useHighlight);
 		gl.uniform1f(gl.getUniformLocation(shader, 'iGlobalTime'), (start-Date.now())/10);
 
 		drawTexture(0,'overlay',overlay,_overlay);
