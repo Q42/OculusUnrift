@@ -4,8 +4,8 @@ var storyboard = [
   sceneBoot,
   sceneCursor,
   sceneMumboJumbo,
-  scenePrinting/*,
-  sceneDashboard*/
+  scenePrinting,
+  sceneDashboard
 ];
 
 
