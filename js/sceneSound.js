@@ -1,4 +1,4 @@
-var scenePrinting = function(callback) {
+var sceneSound = function(callback) {
 	hud.clearRect(0, 0, canvas.width, canvas.height);
 
 	hud.fillStyle = '#ffffff';
@@ -9,7 +9,7 @@ var scenePrinting = function(callback) {
 	var finalSpeech = '';
 	var analyser;
 	var freqByteData;
-	var shouldDraw = true;
+	var running = true;
 	var picture = null;
 	var pictureSize;
 
@@ -47,6 +47,10 @@ var scenePrinting = function(callback) {
 						picture = new Image();
 						picture.setAttribute('src', canvas.toDataURL('image/png'));
 						pictureSize = 2;
+					} else if (finalSpeech.indexOf('lights on') !== -1) {
+						Lights.send('PUT', '/groups/0/action', { on: true });
+					} else if (finalSpeech.indexOf('lights off') !== -1) {
+						Lights.send('PUT', '/groups/0/action', { on: false });
 					} else if (finalSpeech.trim() == 'next') {
 						nextScene();
 					}
@@ -73,10 +77,10 @@ var scenePrinting = function(callback) {
 	}
 
 	function draw() {
-		hud.clearRect(0, 0, canvas.width, canvas.height);
-		if (!shouldDraw) {
+		if (!running) {
 			return;
 		}
+		hud.clearRect(0, 0, canvas.width, canvas.height);
 
 		if (picture != null) {
 			hud.drawImage(picture, canvas.width, 0,
@@ -106,7 +110,8 @@ var scenePrinting = function(callback) {
 	}
 
 	function nextScene() {
-		shouldDraw = false;
+		if (!running) return;
+		running = false;
 		callback();
 	}
 };

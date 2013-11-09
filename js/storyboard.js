@@ -1,11 +1,12 @@
 
 
 var storyboard = [
-  //sceneBoot
-  //,sceneCursor
-  //,sceneMumboJumbo
-  scenePrinting
-  //,sceneDashboard
+  sceneBoot
+  ,sceneCursor
+  ,sceneMumboJumbo
+  ,sceneSound
+  ,sceneCrash
+  ,sceneDashboard
 ];
 
 
