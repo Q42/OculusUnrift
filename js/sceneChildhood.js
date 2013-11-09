@@ -18,7 +18,7 @@ var sceneChildhood = function(callback) {
 	initFrequency();
 
   var voiceCommands = {
-    'childhood': function () {
+    'child': function () {
       console.log('BANANA');
       bananapicture = new Image();
       bananapicture.src = "img/banana.jpg";
