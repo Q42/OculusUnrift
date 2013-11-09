@@ -1,5 +1,5 @@
 var sceneFace = function(callback) {
-	end_x = canvas.width/2;
+	end_x = -100;
 	end_y = canvas.height/2;
 
 	hud.clearRect(0, 0, canvas.width, canvas.height);
@@ -19,7 +19,6 @@ var sceneFace = function(callback) {
 	}
 
 	function drawLines(ex,ey,er){
-		console.log('drawing');
 		hud.clearRect(0, 0, canvas.width, canvas.height);
 
 		hud.shadowColor = "rgba(255,255,255,0.5)";
