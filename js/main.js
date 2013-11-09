@@ -47,10 +47,12 @@ $(function(){
 
 
   var voiceCommands = {
-     'lights on': function () {
+     'light': function () {
+      createjs.Sound.play('sounds/affirmative.mp3');
       Lights.send('PUT', '/groups/0/action', { on: true });
     },
     'lights off': function () {
+      createjs.Sound.play('sounds/affirmative.mp3');
       Lights.send('PUT', '/groups/0/action', { on: false });
     },
     'start': function () {
@@ -80,7 +82,8 @@ $(function(){
 			{ id: 'boot', src: 'sounds/robotpoweron.mp3' },
 			{ id: 'blip', src: 'sounds/blip.mp3' },
 			{ id: 'startup', src: 'sounds/macstartup.mp3' },
-      { id: 'checklist', src: 'sounds/checklist.mp3' },
+      { id: 'checklist', src: 'sounds/online.mp3' },
+      { id: 'affirmative', src: 'sounds/affirmative.mp3' },
 			{ id: 'bips', src: 'sounds/bipone.mp3' }
 		];
 		createjs.Sound.addEventListener('fileload', handleLoad);

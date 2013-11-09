@@ -41,15 +41,15 @@ var speech = new (function () {
     //_recognition.lang = 'nl-NL';
     //_recognition.lang = 'he-HE';
     _recognition.onstart = function () {
-      console.log('Speech recognition started');
+      //console.log('Speech recognition started');
     };
     _recognition.onerror = function (event) {
       interimSpeech = 'Speech recognition error';
-      console.log(interimSpeech, event);
+      //console.log(interimSpeech, event);
     };
     _recognition.onend = function () {
       interimSpeech = 'Speech recognition ended';
-      console.log(interimSpeech);
+      //console.log(interimSpeech);
       _recognition.start();
     };
 
