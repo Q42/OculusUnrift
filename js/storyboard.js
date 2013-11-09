@@ -1,12 +1,11 @@
 
 
 var storyboard = [
-  sceneBoot
+  sceneFace
+  ,sceneBoot
   ,sceneCursor
   ,sceneMumboJumbo
   ,sceneSound
-  ,sceneFace
-  ,sceneDashboard
   ,sceneChildhood
   ,sceneCrash
 ];
