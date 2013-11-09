@@ -21,7 +21,7 @@ var speech = new (function () {
       $.each(events, function (k, v) {
         if (text.indexOf(k) !== -1) {
           recognized = true;
-          v(interimSpeech);
+          v(text);
         }
       });
 
