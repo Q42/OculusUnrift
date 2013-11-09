@@ -9,3 +9,9 @@ Authors:
 [Johan Huijkman](https://github.com/huijkman)  
 [Marcel Duin](https://github.com/marcelduin)  
 [Taco Ekkel](https://github.com/tacoe)  
+
+Supported voice commands in sceneSound.js:  
+"picture"  
+"lights on"  
+"lights off"  
+"next"
