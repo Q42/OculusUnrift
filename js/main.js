@@ -5,6 +5,9 @@ function getURLParameter(name) {
 }
 
 $(function(){
+
+  speech.start();
+
 	canvas = document.getElementById("hud-overlay");
 	hud = canvas.getContext("2d");
 
@@ -38,7 +41,27 @@ $(function(){
 		camera.toggleOverlay();
 	});
 
-	var scene = getURLParameter('scene');
+  var voiceCommands = {
+     'lights on': function () {
+      Lights.send('PUT', '/groups/0/action', { on: true });
+    },
+    'lights off': function () {
+      Lights.send('PUT', '/groups/0/action', { on: false });
+    },
+    start: function () {
+      director.start();
+    },
+    begin: function () {
+      director.start();
+    }
+
+  };
+
+  $.each(voiceCommands, function (k,v) { speech.addFinalEvent(k,v); });
+
+
+
+  var scene = getURLParameter('scene');
 	if (scene !== null) {
 		director.setScene(scene);
 		director.start();

@@ -80,6 +80,10 @@ vec4 tv(vec2 uv, bool left) {
   return vec4(color,1.0);
 }
 
+
+
+
+
 void main() {
 	bool left = (gl_FragCoord.x < res.x/2.0);
 	vec2 ScreenCenter = left ? LeftScreenCenter : RightScreenCenter;

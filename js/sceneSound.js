@@ -13,57 +13,38 @@ var sceneSound = function(callback) {
 	var picture = null;
 	var pictureSize;
 
-	initSpeech();
 	initFrequency();
 
-	function initSpeech() {
-		var recognition = new webkitSpeechRecognition();
-		recognition.continuous = true;
-		recognition.interimResults = true;
-		recognition.lang = 'en-US';
-		//recognition.lang = 'nl-NL';
-		//recognition.lang = 'he-HE';
-		recognition.onstart = function() {
-			console.log('Speech recognition started');
-		};
-		recognition.onerror = function(event) {
-			interimSpeech = 'Speech recognition error';
-			console.log(interimSpeech, event);
-		};
-		recognition.onend = function() {
-			interimSpeech = 'Speech recognition ended';
-			console.log(interimSpeech);
-			setTimeout(nextScene, 3000);
-		};
-		recognition.onresult = function(event) {
-			//console.log(event);
-			for (var i = event.resultIndex; i < event.results.length; ++i) {
-				if (event.results[i].isFinal) {
-					finalSpeech = event.results[i][0].transcript;
-					console.log('final', finalSpeech);
-					if (finalSpeech.indexOf('picture') !== -1) {
-						console.log('pic!');
-						hud.drawImage(streams[0].video, 0, 0, canvas.width, canvas.height);
-						picture = new Image();
-						picture.setAttribute('src', canvas.toDataURL('image/png'));
-						pictureSize = 2;
-					} else if (finalSpeech.indexOf('lights on') !== -1) {
-						Lights.send('PUT', '/groups/0/action', { on: true });
-					} else if (finalSpeech.indexOf('lights off') !== -1) {
-						Lights.send('PUT', '/groups/0/action', { on: false });
-					} else if (finalSpeech.trim() == 'next') {
-						nextScene();
-					}
-				} else {
-					interimSpeech = event.results[i][0].transcript;
-					console.log('interim', interimSpeech);
-				}
-			}
-		};
-		recognition.start();
-	}
+  var finalCommands = {
+    'next': function () {
+      nextScene();
+    },
+    picture: function () {
+      console.log('pic!');
+      hud.drawImage(streams[0].video, 0, 0, canvas.width, canvas.height);
+      picture = new Image();
+      picture.setAttribute('src', canvas.toDataURL('image/png'));
+      pictureSize = 2;
+    }
+  };
 
-	function initFrequency() {
+  var interimCommands = {
+    "": function(text) {
+      interimSpeech = text;
+      draw();
+    }
+  };
+
+  $.each(finalCommands, function (k,v) {
+    speech.addFinalEvent(k,v);
+  });
+
+  $.each(interimCommands, function (k,v) {
+    speech.addInterimEvent(k,v);
+  });
+
+
+  function initFrequency() {
 		navigator.webkitGetUserMedia({audio:true}, function(stream) {
 			var audioContext = new webkitAudioContext();
 			analyser = audioContext.createAnalyser();
@@ -112,6 +93,12 @@ var sceneSound = function(callback) {
 	function nextScene() {
 		if (!running) return;
 		running = false;
+    $.each(finalCommands, function (k) {
+      speech.removeFinalEvent(k);
+    });
+    $.each(interimCommands, function (k) {
+      speech.removeFinalEvent(k);
+    });
 		callback();
 	}
 };
