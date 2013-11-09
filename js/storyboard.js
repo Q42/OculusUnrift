@@ -6,7 +6,6 @@ var storyboard = [
   ,sceneMumboJumbo
   ,sceneSound
   ,sceneFace
-  ,sceneDashboard
   ,sceneChildhood
   ,sceneCrash
 ];
@@ -22,6 +21,7 @@ var director = new (function () {
   self.playCurrentScene = function () {
     var scene = storyboard[self.currentSceneIndex];
     var postSceneDelay = 0;
+    if(camera) camera.setScene(self.currentSceneIndex);
     if (typeof scene === "object") {
       postSceneDelay = scene[1];
       scene = scene[0];

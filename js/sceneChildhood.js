@@ -3,7 +3,7 @@ var sceneChildhood = function(callback) {
 
 	hud.fillStyle = '#ffffff';
 	hud.textAlign = 'center';
-    hud.font = '20pt "visitor_tt1_brkregular" normal';
+  hud.font = '20pt "visitor_tt1_brkregular" normal';
 	
 	var interimSpeech = '';
 	var finalSpeech = '';
@@ -13,11 +13,17 @@ var sceneChildhood = function(callback) {
 	var picture = null;
 	var pictureSize;
 
+  var destroyingChildhood = false;
+
 	initFrequency();
 
   var voiceCommands = {
-    'destroy': function () {
+    'childhood': function () {
       console.log('BANANA');
+      bananapicture = new Image();
+      bananapicture.src = "img/banana.jpg";
+      destroyingChildhood = true;
+      hud.drawImage(bananapicture, canvas.width/4, canvas.height/4, canvas.width/2, canvas.height/2);
       setTimeout(function () { nextScene(); }, 7000);
     }
   };
@@ -48,7 +54,11 @@ var sceneChildhood = function(callback) {
 		if (!running) {
 			return;
 		}
-		hud.clearRect(0, 0, canvas.width, canvas.height);
+    if(!destroyingChildhood) hud.clearRect(0, 0, canvas.width, canvas.height);
+      else {
+        requestAnimationFrame(draw);
+        return;
+      }
 
 		if (picture != null) {
 			hud.drawImage(picture, canvas.width, 0,
@@ -60,14 +70,14 @@ var sceneChildhood = function(callback) {
 				interimSpeech = '';
 				finalSpeech = '';
 			}
-		} else {
-			// Frequency
-			analyser.getByteFrequencyData(freqByteData);
-			hud.fillStyle = 'rgba(255, 255, 255, 0.1)';
-			for (var i = 0; i < freqByteData.length; i++) {
-				hud.fillRect(300 + 8*i, canvas.height/2 + 100, 1, -1 * freqByteData[i]);
-				//hud.fillRect(350 + 8*i, canvas.height / 2  + 100 - freqByteData[i], 4, 4);
-			}
+		} else {      
+      // Frequency
+      analyser.getByteFrequencyData(freqByteData);
+      hud.fillStyle = 'rgba(255, 255, 255, .3)';
+      for (var i = 0; i < freqByteData.length; i++) {
+        hud.fillRect(300 + 8*i, canvas.height/2 + 100, 4, -1 * freqByteData[i]);
+        //hud.fillRect(350 + 8*i, canvas.height / 2  + 100 - freqByteData[i], 4, 4);
+      }
 
 			// Speech
 			//hud.fillText(finalSpeech, center_x, center_y);

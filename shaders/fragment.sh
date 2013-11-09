@@ -81,8 +81,7 @@ vec4 getTexLeft(vec2 uv) {
 vec4 getTexRight(vec2 uv) {
 	return texture2D(tex2, uv);
 }
-float lookup(vec2 p, float dx, float dy, bool left, float d)
-{
+float lookup(vec2 p, float dx, float dy, bool left, float d) {
 	vec2 uv = (p.xy + vec2(dx * d, dy * d)) / res;
 	vec4 c = left ? getTexLeft(uv) : getTexRight(uv);
 
@@ -158,7 +157,7 @@ void main() {
 		}
 
 		//scene specific colour filters
-		if(scene==1) col = scene1(col);
+		if(scene==1||scene==2) col = scene1(col);
 
 		//add the overlay
 		vec2 tco = otc;
