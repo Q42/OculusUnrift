@@ -100,6 +100,12 @@ var sceneFace = function(callback) {
       createjs.Sound.play('sounds/explosion-02.mp3');
       camera.explode();
       setTimeout(nextScene, 3000);
+    },
+    'asta': function () {
+      explStart = new Date();
+      createjs.Sound.play('sounds/explosion-02.mp3');
+      camera.explode();
+      setTimeout(nextScene, 3000);
     }
   };
 
