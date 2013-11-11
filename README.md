@@ -10,17 +10,19 @@ Authors:
 [Marcel Duin](https://github.com/marcelduin)  
 [Taco Ekkel](https://github.com/tacoe)  
 
-Supported voice commands in sceneSound.js:  
+Supported voice commands:  
+"initialize"  
 "picture"  
-"lights on"  
-"lights off"  
-"next"
+"lights"  
+"find"  
+"terminate"  
+"destroy my childhood"
 
 Run the site through https to avoid the repeated camera and microphone permissions.
 
 To deploy to GAE:
-Install the [GAE SDK for Go](https://developers.google.com/appengine/downloads#Google_App_Engine_SDK_for_Go) and run:
-  appcfg.py update --oauth2 .
+Install the [GAE SDK for Go](https://developers.google.com/appengine/downloads#Google_App_Engine_SDK_for_Go) and run:  
+`appcfg.py update --oauth2 .`
 
 After that it will be running at:
 https://oculusunrift.appspot.com
