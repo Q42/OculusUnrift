@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>oculus unrift</title>
+        <meta name="description" content="crazy project with way too advanced tech for a browser">
+        <meta name="viewport" content="width=750, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+        <script type="text/javascript">
+          $(document).ready(function() {
+            $("#button").click(function() { document.location="index.html"; })
+          })
+        </script>
+        <style type="text/css">
+          html {
+            background: white;
+          }
+          #mainimg {
+            background: url(img/unrift.png) no-repeat top left;
+            background-size: 750px 3000px;
+            width: 750px;
+            height: 3100px;
+            position: absolute;
+            left: 50%;
+            margin: 100px 0 0 -375px;
+          }
+          #button {
+            left: 200px;
+            top: 2650px;
+            width: 400px;
+            height: 200px;
+            position: absolute;
+            cursor: pointer;
+          }
+        </style>
+    </head>
+    <body>
+        <div id="mainimg">
+          <div id="button"></div>
+        </div>
+    </body>
+</html>
